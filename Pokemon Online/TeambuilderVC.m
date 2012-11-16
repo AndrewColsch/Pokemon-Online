@@ -7,6 +7,7 @@
 //
 
 #import "TeambuilderVC.h"
+#import "EditPokeVC.h"
 
 @interface TeambuilderVC ()
 
@@ -29,8 +30,49 @@
 	// Do any additional setup after loading the view.
 }
 
+- (IBAction)handlePokeTap:(UITapGestureRecognizer *)sender
+{
+	if (sender.state==UIGestureRecognizerStateEnded) {
+		// Find which Pokemon was tapped
+		CGPoint point = [sender locationInView:self.teamView];
+		int x = point.x;
+		int y = point.y;
+		
+		// First column
+		if (x>=10&&x<=159) {
+			if (y>=10&&y<=83) {
+				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:0]];
+				[self presentViewController:epvc animated:YES completion:NULL];
+			}
+			if (y>=93&&y<=166) {
+				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:2]];
+				[self presentViewController:epvc animated:YES completion:NULL];
+			}
+			if (y>=176&&y<=249) {
+				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:4]];
+				[self presentViewController:epvc animated:YES completion:NULL];
+			}
+		}
+		if (x>=168&&x<=317) {
+			if (y>=10&&y<=83) {
+				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:1]];
+				[self presentViewController:epvc animated:YES completion:NULL];
+			}
+			if (y>=93&&y<=166) {
+				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:3]];
+				[self presentViewController:epvc animated:YES completion:NULL];
+			}
+			if (y>=176&&y<=249) {
+				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:5]];
+				[self presentViewController:epvc animated:YES completion:NULL];
+			}
+		}
+	}
+}
+
 - (IBAction)loadTeam:(id)sender
 {
+	[mydelegate.activeTeam removeAllObjects];
 	NSString *path = [[NSBundle mainBundle] pathForResource:@"Whump" ofType:@"tp"];
 	NSString *fullcontent = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
 	NSString *content = [[NSString alloc] initWithString:fullcontent];
@@ -281,16 +323,23 @@
 		pokefound = [content rangeOfString:@"<Pokemon"];
 		[mydelegate.activeTeam addObject:newpoke];
 		NSString *namelist;
+		NSString *typelist;
 		NSRange nameSpot;
+		NSRange typeSpot;
 		NSString *tempname;
+		NSString *temptype;
 		switch (pokecount) {
 			case 1:
+				// Image
 				[self.pokeView1.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
 				if (newpoke.shiny) {
 					[self.pokeView1.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
 				}
+				// Level
 				self.pokeView1.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
+				// Nickname
 				self.pokeView1.nickname.text = newpoke.nickname;
+				// Species
 				namelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/released_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
 				nameSpot = [namelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
 				if (nameSpot.location==NSNotFound) {
@@ -303,17 +352,57 @@
 					nameSpot = [tempname rangeOfString:@" "];
 					tempname = [tempname substringFromIndex:nameSpot.location+1];
 					nameSpot = [tempname rangeOfString:@"\n"];
-					self.pokeView1.species.text = [tempname substringToIndex:nameSpot.location];
+					newpoke.species = [tempname substringToIndex:nameSpot.location];
+					self.pokeView1.species.text = newpoke.species;
 				}
-				//[self.pokeView1.item setImage:[UIImage imageNamed:@"blah"]];
+				// Types
+				typelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/type1_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+				typeSpot = [typelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
+				if (typeSpot.location==NSNotFound) {
+					UIAlertView *badspec = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Invalid species or forme specified." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+					[badspec show];
+					return;
+				}
+				else {
+					temptype = [typelist substringFromIndex:typeSpot.location];
+					typeSpot = [temptype rangeOfString:@" "];
+					temptype = [temptype substringFromIndex:typeSpot.location+1];
+					typeSpot = [temptype rangeOfString:@"\n"];
+					newpoke.type1 = [[temptype substringToIndex:typeSpot.location] intValue];
+				}
+				typelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/type2_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+				typeSpot = [typelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
+				if (typeSpot.location==NSNotFound) {
+					UIAlertView *badspec = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Invalid species or forme specified." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+					[badspec show];
+					return;
+				}
+				else {
+					temptype = [typelist substringFromIndex:typeSpot.location];
+					typeSpot = [temptype rangeOfString:@" "];
+					temptype = [temptype substringFromIndex:typeSpot.location+1];
+					typeSpot = [temptype rangeOfString:@"\n"];
+					newpoke.type2 = [[temptype substringToIndex:typeSpot.location] intValue];
+				}
+				// Item
+				if (newpoke.item>=8000) {
+					// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
+					[self.pokeView1.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
+				} else {
+					[self.pokeView1.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,newpoke.item]]];
+				}
 				break;
 			case 2:
+				// Image
 				[self.pokeView2.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
 				if (newpoke.shiny) {
 					[self.pokeView2.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
 				}
+				// Level
 				self.pokeView2.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
+				// Nickname
 				self.pokeView2.nickname.text = newpoke.nickname;
+				// Species
 				namelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/released_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
 				nameSpot = [namelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
 				if (nameSpot.location==NSNotFound) {
@@ -326,16 +415,57 @@
 					nameSpot = [tempname rangeOfString:@" "];
 					tempname = [tempname substringFromIndex:nameSpot.location+1];
 					nameSpot = [tempname rangeOfString:@"\n"];
-					self.pokeView2.species.text = [tempname substringToIndex:nameSpot.location];
+					newpoke.species = [tempname substringToIndex:nameSpot.location];
+					self.pokeView2.species.text = newpoke.species;
+				}
+				// Types
+				typelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/type1_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+				typeSpot = [typelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
+				if (typeSpot.location==NSNotFound) {
+					UIAlertView *badspec = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Invalid species or forme specified." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+					[badspec show];
+					return;
+				}
+				else {
+					temptype = [typelist substringFromIndex:typeSpot.location];
+					typeSpot = [temptype rangeOfString:@" "];
+					temptype = [temptype substringFromIndex:typeSpot.location+1];
+					typeSpot = [temptype rangeOfString:@"\n"];
+					newpoke.type1 = [[temptype substringToIndex:typeSpot.location] intValue];
+				}
+				typelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/type2_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+				typeSpot = [typelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
+				if (typeSpot.location==NSNotFound) {
+					UIAlertView *badspec = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Invalid species or forme specified." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+					[badspec show];
+					return;
+				}
+				else {
+					temptype = [typelist substringFromIndex:typeSpot.location];
+					typeSpot = [temptype rangeOfString:@" "];
+					temptype = [temptype substringFromIndex:typeSpot.location+1];
+					typeSpot = [temptype rangeOfString:@"\n"];
+					newpoke.type2 = [[temptype substringToIndex:typeSpot.location] intValue];
+				}
+				// Item
+				if (newpoke.item>=8000) {
+					// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
+					[self.pokeView2.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
+				} else {
+					[self.pokeView2.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,newpoke.item]]];
 				}
 				break;
 			case 3:
+				// Image
 				[self.pokeView3.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
 				if (newpoke.shiny) {
 					[self.pokeView3.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
 				}
+				// Level
 				self.pokeView3.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
+				// Nickname
 				self.pokeView3.nickname.text = newpoke.nickname;
+				// Species
 				namelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/released_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
 				nameSpot = [namelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
 				if (nameSpot.location==NSNotFound) {
@@ -348,16 +478,57 @@
 					nameSpot = [tempname rangeOfString:@" "];
 					tempname = [tempname substringFromIndex:nameSpot.location+1];
 					nameSpot = [tempname rangeOfString:@"\n"];
-					self.pokeView3.species.text = [tempname substringToIndex:nameSpot.location];
+					newpoke.species = [tempname substringToIndex:nameSpot.location];
+					self.pokeView3.species.text = newpoke.species;
+				}
+				// Types
+				typelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/type1_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+				typeSpot = [typelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
+				if (typeSpot.location==NSNotFound) {
+					UIAlertView *badspec = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Invalid species or forme specified." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+					[badspec show];
+					return;
+				}
+				else {
+					temptype = [typelist substringFromIndex:typeSpot.location];
+					typeSpot = [temptype rangeOfString:@" "];
+					temptype = [temptype substringFromIndex:typeSpot.location+1];
+					typeSpot = [temptype rangeOfString:@"\n"];
+					newpoke.type1 = [[temptype substringToIndex:typeSpot.location] intValue];
+				}
+				typelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/type2_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+				typeSpot = [typelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
+				if (typeSpot.location==NSNotFound) {
+					UIAlertView *badspec = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Invalid species or forme specified." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+					[badspec show];
+					return;
+				}
+				else {
+					temptype = [typelist substringFromIndex:typeSpot.location];
+					typeSpot = [temptype rangeOfString:@" "];
+					temptype = [temptype substringFromIndex:typeSpot.location+1];
+					typeSpot = [temptype rangeOfString:@"\n"];
+					newpoke.type2 = [[temptype substringToIndex:typeSpot.location] intValue];
+				}
+				// Item
+				if (newpoke.item>=8000) {
+					// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
+					[self.pokeView3.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
+				} else {
+					[self.pokeView3.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,newpoke.item]]];
 				}
 				break;
 			case 4:
+				// Image
 				[self.pokeView4.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
 				if (newpoke.shiny) {
 					[self.pokeView4.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
 				}
+				// Level
 				self.pokeView4.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
+				// Nickname
 				self.pokeView4.nickname.text = newpoke.nickname;
+				// Species
 				namelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/released_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
 				nameSpot = [namelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
 				if (nameSpot.location==NSNotFound) {
@@ -370,16 +541,57 @@
 					nameSpot = [tempname rangeOfString:@" "];
 					tempname = [tempname substringFromIndex:nameSpot.location+1];
 					nameSpot = [tempname rangeOfString:@"\n"];
-					self.pokeView4.species.text = [tempname substringToIndex:nameSpot.location];
+					newpoke.species = [tempname substringToIndex:nameSpot.location];
+					self.pokeView4.species.text = newpoke.species;
+				}
+				// Types
+				typelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/type1_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+				typeSpot = [typelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
+				if (typeSpot.location==NSNotFound) {
+					UIAlertView *badspec = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Invalid species or forme specified." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+					[badspec show];
+					return;
+				}
+				else {
+					temptype = [typelist substringFromIndex:typeSpot.location];
+					typeSpot = [temptype rangeOfString:@" "];
+					temptype = [temptype substringFromIndex:typeSpot.location+1];
+					typeSpot = [temptype rangeOfString:@"\n"];
+					newpoke.type1 = [[temptype substringToIndex:typeSpot.location] intValue];
+				}
+				typelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/type2_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+				typeSpot = [typelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
+				if (typeSpot.location==NSNotFound) {
+					UIAlertView *badspec = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Invalid species or forme specified." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+					[badspec show];
+					return;
+				}
+				else {
+					temptype = [typelist substringFromIndex:typeSpot.location];
+					typeSpot = [temptype rangeOfString:@" "];
+					temptype = [temptype substringFromIndex:typeSpot.location+1];
+					typeSpot = [temptype rangeOfString:@"\n"];
+					newpoke.type2 = [[temptype substringToIndex:typeSpot.location] intValue];
+				}
+				// Item
+				if (newpoke.item>=8000) {
+					// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
+					[self.pokeView4.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
+				} else {
+					[self.pokeView4.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,newpoke.item]]];
 				}
 				break;
 			case 5:
+				// Image
 				[self.pokeView5.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
 				if (newpoke.shiny) {
 					[self.pokeView5.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
 				}
+				// Level
 				self.pokeView5.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
+				// Nickname
 				self.pokeView5.nickname.text = newpoke.nickname;
+				// Species
 				namelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/released_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
 				nameSpot = [namelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
 				if (nameSpot.location==NSNotFound) {
@@ -392,16 +604,57 @@
 					nameSpot = [tempname rangeOfString:@" "];
 					tempname = [tempname substringFromIndex:nameSpot.location+1];
 					nameSpot = [tempname rangeOfString:@"\n"];
-					self.pokeView5.species.text = [tempname substringToIndex:nameSpot.location];
+					newpoke.species = [tempname substringToIndex:nameSpot.location];
+					self.pokeView5.species.text = newpoke.species;
+				}
+				// Types
+				typelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/type1_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+				typeSpot = [typelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
+				if (typeSpot.location==NSNotFound) {
+					UIAlertView *badspec = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Invalid species or forme specified." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+					[badspec show];
+					return;
+				}
+				else {
+					temptype = [typelist substringFromIndex:typeSpot.location];
+					typeSpot = [temptype rangeOfString:@" "];
+					temptype = [temptype substringFromIndex:typeSpot.location+1];
+					typeSpot = [temptype rangeOfString:@"\n"];
+					newpoke.type1 = [[temptype substringToIndex:typeSpot.location] intValue];
+				}
+				typelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/type2_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+				typeSpot = [typelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
+				if (typeSpot.location==NSNotFound) {
+					UIAlertView *badspec = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Invalid species or forme specified." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+					[badspec show];
+					return;
+				}
+				else {
+					temptype = [typelist substringFromIndex:typeSpot.location];
+					typeSpot = [temptype rangeOfString:@" "];
+					temptype = [temptype substringFromIndex:typeSpot.location+1];
+					typeSpot = [temptype rangeOfString:@"\n"];
+					newpoke.type2 = [[temptype substringToIndex:typeSpot.location] intValue];
+				}
+				// Item
+				if (newpoke.item>=8000) {
+					// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
+					[self.pokeView5.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
+				} else {
+					[self.pokeView5.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,newpoke.item]]];
 				}
 				break;
 			case 6:
+				// Image
 				[self.pokeView6.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
 				if (newpoke.shiny) {
 					[self.pokeView6.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
 				}
+				// Level
 				self.pokeView6.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
+				// Nickname
 				self.pokeView6.nickname.text = newpoke.nickname;
+				// Species
 				namelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/released_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
 				nameSpot = [namelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
 				if (nameSpot.location==NSNotFound) {
@@ -414,7 +667,44 @@
 					nameSpot = [tempname rangeOfString:@" "];
 					tempname = [tempname substringFromIndex:nameSpot.location+1];
 					nameSpot = [tempname rangeOfString:@"\n"];
-					self.pokeView6.species.text = [tempname substringToIndex:nameSpot.location];
+					newpoke.species = [tempname substringToIndex:nameSpot.location];
+					self.pokeView6.species.text = newpoke.species;
+				}
+				// Types
+				typelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/type1_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+				typeSpot = [typelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
+				if (typeSpot.location==NSNotFound) {
+					UIAlertView *badspec = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Invalid species or forme specified." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+					[badspec show];
+					return;
+				}
+				else {
+					temptype = [typelist substringFromIndex:typeSpot.location];
+					typeSpot = [temptype rangeOfString:@" "];
+					temptype = [temptype substringFromIndex:typeSpot.location+1];
+					typeSpot = [temptype rangeOfString:@"\n"];
+					newpoke.type1 = [[temptype substringToIndex:typeSpot.location] intValue];
+				}
+				typelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/type2_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+				typeSpot = [typelist rangeOfString:[NSString stringWithFormat:@"%d:%d",newpoke.number,newpoke.forme]];
+				if (typeSpot.location==NSNotFound) {
+					UIAlertView *badspec = [[UIAlertView alloc] initWithTitle:@"ERROR" message:@"Invalid species or forme specified." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+					[badspec show];
+					return;
+				}
+				else {
+					temptype = [typelist substringFromIndex:typeSpot.location];
+					typeSpot = [temptype rangeOfString:@" "];
+					temptype = [temptype substringFromIndex:typeSpot.location+1];
+					typeSpot = [temptype rangeOfString:@"\n"];
+					newpoke.type2 = [[temptype substringToIndex:typeSpot.location] intValue];
+				}
+				// Item
+				if (newpoke.item>=8000) {
+					// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
+					[self.pokeView6.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
+				} else {
+					[self.pokeView6.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,newpoke.item]]];
 				}
 				break;
 			default:

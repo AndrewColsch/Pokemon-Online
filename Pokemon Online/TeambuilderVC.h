@@ -12,6 +12,7 @@
 
 @interface TeambuilderVC : UIViewController
 
+@property (nonatomic, retain) IBOutlet UIView *teamView;
 @property (nonatomic, retain) IBOutlet TBPokePreviewView *pokeView1;
 @property (nonatomic, retain) IBOutlet TBPokePreviewView *pokeView2;
 @property (nonatomic, retain) IBOutlet TBPokePreviewView *pokeView3;
@@ -19,6 +20,7 @@
 @property (nonatomic, retain) IBOutlet TBPokePreviewView *pokeView5;
 @property (nonatomic, retain) IBOutlet TBPokePreviewView *pokeView6;
 
+- (IBAction)handlePokeTap:(UITapGestureRecognizer *)sender;
 - (IBAction)loadTeam:(id)sender;
 
 @end

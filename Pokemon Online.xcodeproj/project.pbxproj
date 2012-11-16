@@ -416,6 +416,31 @@
 		7BCF20791654524500486B9A /* typestable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF1EFC1654524400486B9A /* typestable.txt */; };
 		7BCF207A1654524500486B9A /* typestable_gen1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF1EFD1654524400486B9A /* typestable_gen1.txt */; };
 		7BF4E0BD1656840000CC6743 /* SettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF4E0BC1656840000CC6743 /* SettingsVC.m */; };
+		7BF4E0C21656D4C300CC6743 /* EditPokeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF4E0C01656D4C300CC6743 /* EditPokeVC.m */; };
+		7BF4E0C31656D4C300CC6743 /* EditPokeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0C11656D4C300CC6743 /* EditPokeVC.xib */; };
+		7BF4E0C61656D75B00CC6743 /* gender1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0C41656D75B00CC6743 /* gender1.png */; };
+		7BF4E0C71656D75B00CC6743 /* gender2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0C51656D75B00CC6743 /* gender2.png */; };
+		7BF4E0CA1656D77500CC6743 /* battle_gender1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0C81656D77500CC6743 /* battle_gender1.png */; };
+		7BF4E0CB1656D77500CC6743 /* battle_gender2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0C91656D77500CC6743 /* battle_gender2.png */; };
+		7BF4E0DF1656D86D00CC6743 /* type_colors.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0CC1656D86D00CC6743 /* type_colors.txt */; };
+		7BF4E0E01656D86D00CC6743 /* type0.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0CD1656D86D00CC6743 /* type0.png */; };
+		7BF4E0E11656D86D00CC6743 /* type1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0CE1656D86D00CC6743 /* type1.png */; };
+		7BF4E0E21656D86D00CC6743 /* type2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0CF1656D86D00CC6743 /* type2.png */; };
+		7BF4E0E31656D86D00CC6743 /* type3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0D01656D86D00CC6743 /* type3.png */; };
+		7BF4E0E41656D86D00CC6743 /* type4.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0D11656D86D00CC6743 /* type4.png */; };
+		7BF4E0E51656D86D00CC6743 /* type5.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0D21656D86D00CC6743 /* type5.png */; };
+		7BF4E0E61656D86D00CC6743 /* type6.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0D31656D86D00CC6743 /* type6.png */; };
+		7BF4E0E71656D86D00CC6743 /* type7.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0D41656D86D00CC6743 /* type7.png */; };
+		7BF4E0E81656D86D00CC6743 /* type8.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0D51656D86D00CC6743 /* type8.png */; };
+		7BF4E0E91656D86D00CC6743 /* type9.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0D61656D86D00CC6743 /* type9.png */; };
+		7BF4E0EA1656D86D00CC6743 /* type10.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0D71656D86D00CC6743 /* type10.png */; };
+		7BF4E0EB1656D86D00CC6743 /* type11.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0D81656D86D00CC6743 /* type11.png */; };
+		7BF4E0EC1656D86D00CC6743 /* type12.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0D91656D86D00CC6743 /* type12.png */; };
+		7BF4E0ED1656D86D00CC6743 /* type13.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0DA1656D86D00CC6743 /* type13.png */; };
+		7BF4E0EE1656D86D00CC6743 /* type14.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0DB1656D86D00CC6743 /* type14.png */; };
+		7BF4E0EF1656D86D00CC6743 /* type15.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0DC1656D86D00CC6743 /* type15.png */; };
+		7BF4E0F01656D86D00CC6743 /* type16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0DD1656D86D00CC6743 /* type16.png */; };
+		7BF4E0F11656D86D00CC6743 /* type17.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0DE1656D86D00CC6743 /* type17.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -854,6 +879,32 @@
 		7BCF1EFD1654524400486B9A /* typestable_gen1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = typestable_gen1.txt; sourceTree = "<group>"; };
 		7BF4E0BB1656840000CC6743 /* SettingsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsVC.h; sourceTree = "<group>"; };
 		7BF4E0BC1656840000CC6743 /* SettingsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsVC.m; sourceTree = "<group>"; };
+		7BF4E0BF1656D4C300CC6743 /* EditPokeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPokeVC.h; sourceTree = "<group>"; };
+		7BF4E0C01656D4C300CC6743 /* EditPokeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPokeVC.m; sourceTree = "<group>"; };
+		7BF4E0C11656D4C300CC6743 /* EditPokeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditPokeVC.xib; sourceTree = "<group>"; };
+		7BF4E0C41656D75B00CC6743 /* gender1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gender1.png; sourceTree = "<group>"; };
+		7BF4E0C51656D75B00CC6743 /* gender2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gender2.png; sourceTree = "<group>"; };
+		7BF4E0C81656D77500CC6743 /* battle_gender1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = battle_gender1.png; sourceTree = "<group>"; };
+		7BF4E0C91656D77500CC6743 /* battle_gender2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = battle_gender2.png; sourceTree = "<group>"; };
+		7BF4E0CC1656D86D00CC6743 /* type_colors.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = type_colors.txt; sourceTree = "<group>"; };
+		7BF4E0CD1656D86D00CC6743 /* type0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type0.png; sourceTree = "<group>"; };
+		7BF4E0CE1656D86D00CC6743 /* type1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type1.png; sourceTree = "<group>"; };
+		7BF4E0CF1656D86D00CC6743 /* type2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type2.png; sourceTree = "<group>"; };
+		7BF4E0D01656D86D00CC6743 /* type3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type3.png; sourceTree = "<group>"; };
+		7BF4E0D11656D86D00CC6743 /* type4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type4.png; sourceTree = "<group>"; };
+		7BF4E0D21656D86D00CC6743 /* type5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type5.png; sourceTree = "<group>"; };
+		7BF4E0D31656D86D00CC6743 /* type6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type6.png; sourceTree = "<group>"; };
+		7BF4E0D41656D86D00CC6743 /* type7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type7.png; sourceTree = "<group>"; };
+		7BF4E0D51656D86D00CC6743 /* type8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type8.png; sourceTree = "<group>"; };
+		7BF4E0D61656D86D00CC6743 /* type9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type9.png; sourceTree = "<group>"; };
+		7BF4E0D71656D86D00CC6743 /* type10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type10.png; sourceTree = "<group>"; };
+		7BF4E0D81656D86D00CC6743 /* type11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type11.png; sourceTree = "<group>"; };
+		7BF4E0D91656D86D00CC6743 /* type12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type12.png; sourceTree = "<group>"; };
+		7BF4E0DA1656D86D00CC6743 /* type13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type13.png; sourceTree = "<group>"; };
+		7BF4E0DB1656D86D00CC6743 /* type14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type14.png; sourceTree = "<group>"; };
+		7BF4E0DC1656D86D00CC6743 /* type15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type15.png; sourceTree = "<group>"; };
+		7BF4E0DD1656D86D00CC6743 /* type16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type16.png; sourceTree = "<group>"; };
+		7BF4E0DE1656D86D00CC6743 /* type17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type17.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1496,6 +1547,9 @@
 				7BF4E0BC1656840000CC6743 /* SettingsVC.m */,
 				7BCF1D531654500D00486B9A /* TeambuilderVC.h */,
 				7BCF1D541654500D00486B9A /* TeambuilderVC.m */,
+				7BF4E0BF1656D4C300CC6743 /* EditPokeVC.h */,
+				7BF4E0C01656D4C300CC6743 /* EditPokeVC.m */,
+				7BF4E0C11656D4C300CC6743 /* EditPokeVC.xib */,
 				7B27663816555D8A009F8A9C /* TBPokePreviewView.h */,
 				7B27663916555D8A009F8A9C /* TBPokePreviewView.m */,
 				7BCF1D5A1654524400486B9A /* db */,
@@ -1590,6 +1644,10 @@
 		7BCF1D671654524400486B9A /* genders */ = {
 			isa = PBXGroup;
 			children = (
+				7BF4E0C41656D75B00CC6743 /* gender1.png */,
+				7BF4E0C51656D75B00CC6743 /* gender2.png */,
+				7BF4E0C81656D77500CC6743 /* battle_gender1.png */,
+				7BF4E0C91656D77500CC6743 /* battle_gender2.png */,
 				7BCF1D681654524400486B9A /* genders.txt */,
 			);
 			path = genders;
@@ -1676,6 +1734,25 @@
 				7BCF1EFB1654524400486B9A /* types.txt */,
 				7BCF1EFC1654524400486B9A /* typestable.txt */,
 				7BCF1EFD1654524400486B9A /* typestable_gen1.txt */,
+				7BF4E0CC1656D86D00CC6743 /* type_colors.txt */,
+				7BF4E0CD1656D86D00CC6743 /* type0.png */,
+				7BF4E0CE1656D86D00CC6743 /* type1.png */,
+				7BF4E0CF1656D86D00CC6743 /* type2.png */,
+				7BF4E0D01656D86D00CC6743 /* type3.png */,
+				7BF4E0D11656D86D00CC6743 /* type4.png */,
+				7BF4E0D21656D86D00CC6743 /* type5.png */,
+				7BF4E0D31656D86D00CC6743 /* type6.png */,
+				7BF4E0D41656D86D00CC6743 /* type7.png */,
+				7BF4E0D51656D86D00CC6743 /* type8.png */,
+				7BF4E0D61656D86D00CC6743 /* type9.png */,
+				7BF4E0D71656D86D00CC6743 /* type10.png */,
+				7BF4E0D81656D86D00CC6743 /* type11.png */,
+				7BF4E0D91656D86D00CC6743 /* type12.png */,
+				7BF4E0DA1656D86D00CC6743 /* type13.png */,
+				7BF4E0DB1656D86D00CC6743 /* type14.png */,
+				7BF4E0DC1656D86D00CC6743 /* type15.png */,
+				7BF4E0DD1656D86D00CC6743 /* type16.png */,
+				7BF4E0DE1656D86D00CC6743 /* type17.png */,
 			);
 			path = types;
 			sourceTree = "<group>";
@@ -2139,6 +2216,30 @@
 				7B6141E316549D75009E4F3E /* specialstat.txt in Resources */,
 				7B6141E416549D75009E4F3E /* stats.txt in Resources */,
 				7B6141E516549D75009E4F3E /* weight.txt in Resources */,
+				7BF4E0C31656D4C300CC6743 /* EditPokeVC.xib in Resources */,
+				7BF4E0C61656D75B00CC6743 /* gender1.png in Resources */,
+				7BF4E0C71656D75B00CC6743 /* gender2.png in Resources */,
+				7BF4E0CA1656D77500CC6743 /* battle_gender1.png in Resources */,
+				7BF4E0CB1656D77500CC6743 /* battle_gender2.png in Resources */,
+				7BF4E0DF1656D86D00CC6743 /* type_colors.txt in Resources */,
+				7BF4E0E01656D86D00CC6743 /* type0.png in Resources */,
+				7BF4E0E11656D86D00CC6743 /* type1.png in Resources */,
+				7BF4E0E21656D86D00CC6743 /* type2.png in Resources */,
+				7BF4E0E31656D86D00CC6743 /* type3.png in Resources */,
+				7BF4E0E41656D86D00CC6743 /* type4.png in Resources */,
+				7BF4E0E51656D86D00CC6743 /* type5.png in Resources */,
+				7BF4E0E61656D86D00CC6743 /* type6.png in Resources */,
+				7BF4E0E71656D86D00CC6743 /* type7.png in Resources */,
+				7BF4E0E81656D86D00CC6743 /* type8.png in Resources */,
+				7BF4E0E91656D86D00CC6743 /* type9.png in Resources */,
+				7BF4E0EA1656D86D00CC6743 /* type10.png in Resources */,
+				7BF4E0EB1656D86D00CC6743 /* type11.png in Resources */,
+				7BF4E0EC1656D86D00CC6743 /* type12.png in Resources */,
+				7BF4E0ED1656D86D00CC6743 /* type13.png in Resources */,
+				7BF4E0EE1656D86D00CC6743 /* type14.png in Resources */,
+				7BF4E0EF1656D86D00CC6743 /* type15.png in Resources */,
+				7BF4E0F01656D86D00CC6743 /* type16.png in Resources */,
+				7BF4E0F11656D86D00CC6743 /* type17.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2185,6 +2286,7 @@
 				7B27664C16556644009F8A9C /* unzip.c in Sources */,
 				7B27664D16556644009F8A9C /* zip.c in Sources */,
 				7BF4E0BD1656840000CC6743 /* SettingsVC.m in Sources */,
+				7BF4E0C21656D4C300CC6743 /* EditPokeVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -601,6 +601,7 @@
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.4436796995224061" green="0.5863570884511764" blue="0.65943877551020402" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="8v6-2V-PfZ" firstAttribute="top" secondItem="Hr7-6s-m61" secondAttribute="top" type="default" id="1T2-A8-Hkb"/>
                                     <constraint firstItem="8v6-2V-PfZ" firstAttribute="leading" secondItem="XGt-HP-FMs" secondAttribute="leading" type="default" id="1wa-DW-epF"/>
@@ -627,6 +628,9 @@
                                     <constraint firstItem="XGt-HP-FMs" firstAttribute="top" secondItem="gbY-tq-bR9" secondAttribute="top" type="default" id="s5n-lg-vcl"/>
                                     <constraint firstItem="alw-Bp-CuP" firstAttribute="top" secondItem="A3e-1M-TX1" secondAttribute="top" constant="176" id="xMO-ft-b0e"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="e0a-s6-v4O" appends="YES" id="P1a-6z-cdR"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.32155269289999999" green="0.45099480800000002" blue="0.51349250639999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -657,9 +661,16 @@
                         <outlet property="pokeView4" destination="8v6-2V-PfZ" id="hUB-Z4-uqN"/>
                         <outlet property="pokeView5" destination="alw-Bp-CuP" id="VSA-pK-aVQ"/>
                         <outlet property="pokeView6" destination="B62-cP-UcH" id="Xy6-dZ-z4z"/>
+                        <outlet property="teamView" destination="A3e-1M-TX1" id="oFD-xz-dlT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mM7-UJ-41F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="e0a-s6-v4O">
+                    <connections>
+                        <action selector="handlePokeTap:" destination="bAr-bt-7Pl" id="JQb-k2-7In"/>
+                        <outlet property="delegate" destination="bAr-bt-7Pl" id="9Or-Tb-gw7"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="553" y="127"/>
         </scene>
@@ -684,6 +695,7 @@
         <class className="TeambuilderVC" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TeambuilderVC.h"/>
             <relationships>
+                <relationship kind="action" name="handlePokeTap:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="action" name="loadTeam:"/>
                 <relationship kind="outlet" name="pokeView1" candidateClass="TBPokePreviewView"/>
                 <relationship kind="outlet" name="pokeView2" candidateClass="TBPokePreviewView"/>
@@ -691,6 +703,7 @@
                 <relationship kind="outlet" name="pokeView4" candidateClass="TBPokePreviewView"/>
                 <relationship kind="outlet" name="pokeView5" candidateClass="TBPokePreviewView"/>
                 <relationship kind="outlet" name="pokeView6" candidateClass="TBPokePreviewView"/>
+                <relationship kind="outlet" name="teamView" candidateClass="UIView"/>
             </relationships>
         </class>
         <class className="ViewController" superclassName="UIViewController">

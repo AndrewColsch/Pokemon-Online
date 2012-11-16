@@ -18,12 +18,15 @@
 	self.nature = 0;
 	self.shiny = 0;
 	self.nickname = @"Missingno";
+	self.species = @"Missingno";
 	self.gender = 0;
 	self.forme = 0;
 	self.happiness = 0;
 	self.level = 0;
 	self.gender = 0;
 	self.subgeneration = 0;
+	self.type1 = 0;
+	self.type1 = 0;
 	self.move1 = 0;
 	self.move2 = 0;
 	self.move3 = 0;
@@ -44,7 +47,7 @@
 	return self;
 }
 
-- (id)initWithItem:(int)it Ability:(int)ab Number:(int)nu Nature:(int)na Shiny:(int)sh Name:(NSString *)nm Gen:(int)ge Forme:(int)fo Happiness:(int)ha Level:(int)le Gender:(int)se SubGen:(int)su Move1:(int)m1 Move2:(int)m2 Move3:(int)m3 Move4:(int)m4 DV1:(int)d1 DV2:(int)d2 DV3:(int)d3 DV4:(int)d4 DV5:(int)d5 DV6:(int)d6 EV1:(int)e1 EV2:(int)e2 EV3:(int)e3 EV4:(int)e4 EV5:(int)e5 EV6:(int)e6
+- (id)initWithItem:(int)it Ability:(int)ab Number:(int)nu Nature:(int)na Shiny:(int)sh Name:(NSString *)nm Species:(NSString *)sp Gen:(int)ge Forme:(int)fo Happiness:(int)ha Level:(int)le Gender:(int)se SubGen:(int)su Type1:(int)t1 Type2:(int)t2 Move1:(int)m1 Move2:(int)m2 Move3:(int)m3 Move4:(int)m4 DV1:(int)d1 DV2:(int)d2 DV3:(int)d3 DV4:(int)d4 DV5:(int)d5 DV6:(int)d6 EV1:(int)e1 EV2:(int)e2 EV3:(int)e3 EV4:(int)e4 EV5:(int)e5 EV6:(int)e6
 {
 	self.item = it;
 	self.ability = ab;
@@ -52,12 +55,15 @@
 	self.nature = na;
 	self.shiny = sh;
 	self.nickname = nm;
+	self.species = sp;
 	self.gender = ge;
 	self.forme = fo;
 	self.happiness = ha;
 	self.level = le;
 	self.gender = se;
 	self.subgeneration = su;
+	self.type1 = t1;
+	self.type2 = t2;
 	self.move1 = m1;
 	self.move2 = m2;
 	self.move3 = m3;

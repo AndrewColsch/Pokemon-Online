@@ -29,6 +29,11 @@
 	self.basePath = [zipPath substringToIndex:lastslash.location+1];
 	[SSZipArchive unzipFileAtPath:zipPath toDestination:self.basePath];
 	
+	zipPath = [[NSBundle mainBundle] pathForResource:@"Berries" ofType:@"zip"];
+	[SSZipArchive unzipFileAtPath:zipPath toDestination:[NSString stringWithFormat:@"%@/Berries/",self.basePath]];
+	zipPath = [[NSBundle mainBundle] pathForResource:@"Items" ofType:@"zip"];
+	[SSZipArchive unzipFileAtPath:zipPath toDestination:[NSString stringWithFormat:@"%@/Items/",self.basePath]];
+	
     return YES;
 }
 							
