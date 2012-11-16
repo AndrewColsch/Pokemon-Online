@@ -286,6 +286,9 @@
 		switch (pokecount) {
 			case 1:
 				[self.pokeView1.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
+				if (newpoke.shiny) {
+					[self.pokeView1.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
+				}
 				self.pokeView1.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
 				self.pokeView1.nickname.text = newpoke.nickname;
 				namelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/released_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
@@ -306,6 +309,9 @@
 				break;
 			case 2:
 				[self.pokeView2.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
+				if (newpoke.shiny) {
+					[self.pokeView2.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
+				}
 				self.pokeView2.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
 				self.pokeView2.nickname.text = newpoke.nickname;
 				namelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/released_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
@@ -325,6 +331,9 @@
 				break;
 			case 3:
 				[self.pokeView3.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
+				if (newpoke.shiny) {
+					[self.pokeView3.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
+				}
 				self.pokeView3.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
 				self.pokeView3.nickname.text = newpoke.nickname;
 				namelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/released_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
@@ -344,6 +353,9 @@
 				break;
 			case 4:
 				[self.pokeView4.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
+				if (newpoke.shiny) {
+					[self.pokeView4.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
+				}
 				self.pokeView4.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
 				self.pokeView4.nickname.text = newpoke.nickname;
 				namelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/released_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
@@ -363,6 +375,9 @@
 				break;
 			case 5:
 				[self.pokeView5.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
+				if (newpoke.shiny) {
+					[self.pokeView5.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
+				}
 				self.pokeView5.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
 				self.pokeView5.nickname.text = newpoke.nickname;
 				namelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/released_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
@@ -382,6 +397,9 @@
 				break;
 			case 6:
 				[self.pokeView6.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
+				if (newpoke.shiny) {
+					[self.pokeView6.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
+				}
 				self.pokeView6.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
 				self.pokeView6.nickname.text = newpoke.nickname;
 				namelist = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/released_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
