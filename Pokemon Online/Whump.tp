@@ -1,5 +1,5 @@
 <Team version="1" gen="5" defaultTier="Wifi OU" subgen="1">
-    <Pokemon Item="48" Ability="99" Num="68" Nature="3" Shiny="0" Nickname="Punchy" Gen="5" Forme="0" Happiness="0" Lvl="100" Gender="1" SubGen="1">
+    <Pokemon Item="8000" Ability="99" Num="68" Nature="3" Shiny="0" Nickname="Punchy" Gen="5" Forme="0" Happiness="20" Lvl="100" Gender="1" SubGen="1">
         <Move>223</Move>
         <Move>89</Move>
         <Move>8</Move>
@@ -17,7 +17,7 @@
         <EV>0</EV>
         <EV>4</EV>
     </Pokemon>
-    <Pokemon Item="8" Ability="78" Num="466" Nature="3" Shiny="0" Nickname="Expert" Gen="5" Forme="0" Happiness="0" Lvl="100" Gender="2" SubGen="1">
+    <Pokemon Item="8" Ability="78" Num="466" Nature="3" Shiny="0" Nickname="Expert" Gen="5" Forme="0" Happiness="245" Lvl="100" Gender="2" SubGen="1">
         <Move>238</Move>
         <Move>89</Move>
         <Move>7</Move>
