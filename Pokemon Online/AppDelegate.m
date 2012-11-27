@@ -34,6 +34,60 @@
 	zipPath = [[NSBundle mainBundle] pathForResource:@"Items" ofType:@"zip"];
 	[SSZipArchive unzipFileAtPath:zipPath toDestination:[NSString stringWithFormat:@"%@/Items/",self.basePath]];
 	
+	// attempting to alphabetize the item arrays
+	self.itemAlphaNum = [[NSMutableArray alloc] init];
+	self.berryAlphaNum = [[NSMutableArray alloc] init];
+	
+	NSMutableArray *tempItems = [[NSMutableArray alloc] init];
+	NSMutableArray *tempItems2 = [[NSMutableArray alloc] init];
+	
+	NSString *iListFile = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/items.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+	
+	for (int x=0; x<=304; x++) {
+		NSString *searchString = [NSString stringWithFormat:@"%d",x];
+		NSString *tempString = iListFile;
+		NSRange findName = [tempString rangeOfString:searchString];
+		tempString = [tempString substringFromIndex:findName.location];
+		findName = [tempString rangeOfString:@" "];
+		tempString = [tempString substringFromIndex:findName.location+1];
+		findName = [tempString rangeOfString:@"\n"];
+		tempString = [tempString substringToIndex:findName.location];
+		
+		[tempItems addObject:tempString];
+		[tempItems2 addObject:tempString];
+	}
+	
+	// This SHOULD be a one-line quick fix for alphabetizing the item list
+	// but for some reason it doesn't work quite right
+	// tempItems2 = [tempItems sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+	for (int x=1; x<=304; x++) {
+		for (int y=0; y<x; y++) {
+			NSString *s1 = [tempItems2 objectAtIndex:x];
+			NSString *s2 = [tempItems2 objectAtIndex:y];
+			if ([s1 localizedCaseInsensitiveCompare:s2]==NSOrderedAscending) {
+				[tempItems2 replaceObjectAtIndex:x withObject:s2];
+				[tempItems2 replaceObjectAtIndex:y withObject:s1];
+			}
+		}
+	}
+	
+	
+	for (int x=0; x<=304; x++) {
+		bool found = NO;
+		for (int y=0; y<=304 && !found; y++) {
+			NSString *s1 = [tempItems2 objectAtIndex:x];
+			NSString *s2 = [tempItems objectAtIndex:y];
+			if ([s1 isEqualToString:s2]) {
+				NSNumber *tempInt = [[NSNumber alloc] initWithInt:y];
+				[self.itemAlphaNum addObject:tempInt];
+				found = YES;
+			}
+		}
+		if (!found) {
+			[self.itemAlphaNum addObject:[[NSNumber alloc] initWithInt:0]];
+		}
+	}
+	
     return YES;
 }
 							

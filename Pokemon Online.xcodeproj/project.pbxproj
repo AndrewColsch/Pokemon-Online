@@ -332,6 +332,7 @@
 		7B6141E416549D75009E4F3E /* stats.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7B61412B16549D75009E4F3E /* stats.txt */; };
 		7B6141E516549D75009E4F3E /* weight.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7B61412C16549D75009E4F3E /* weight.txt */; };
 		7B6141E816549F5A009E4F3E /* Pokemon.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6141E716549F5A009E4F3E /* Pokemon.m */; };
+		7B7719BD1663CE960099EA44 /* Move.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7719BC1663CE960099EA44 /* Move.m */; };
 		7BCF1D1916544F6200486B9A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCF1D1816544F6200486B9A /* UIKit.framework */; };
 		7BCF1D1B16544F6200486B9A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCF1D1A16544F6200486B9A /* Foundation.framework */; };
 		7BCF1D1D16544F6200486B9A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCF1D1C16544F6200486B9A /* CoreGraphics.framework */; };
@@ -787,6 +788,8 @@
 		7B61412C16549D75009E4F3E /* weight.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weight.txt; sourceTree = "<group>"; };
 		7B6141E616549F5A009E4F3E /* Pokemon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pokemon.h; sourceTree = "<group>"; };
 		7B6141E716549F5A009E4F3E /* Pokemon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pokemon.m; sourceTree = "<group>"; };
+		7B7719BB1663CE960099EA44 /* Move.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Move.h; sourceTree = "<group>"; };
+		7B7719BC1663CE960099EA44 /* Move.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Move.m; sourceTree = "<group>"; };
 		7BCF1D1416544F6200486B9A /* Pokemon Online.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pokemon Online.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BCF1D1816544F6200486B9A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7BCF1D1A16544F6200486B9A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1540,6 +1543,8 @@
 				7BCF1D2816544F6200486B9A /* AppDelegate.m */,
 				7B6141E616549F5A009E4F3E /* Pokemon.h */,
 				7B6141E716549F5A009E4F3E /* Pokemon.m */,
+				7B7719BB1663CE960099EA44 /* Move.h */,
+				7B7719BC1663CE960099EA44 /* Move.m */,
 				7BCF1D3016544F6300486B9A /* MainStoryboard.storyboard */,
 				7BCF1D3316544F6300486B9A /* ViewController.h */,
 				7BCF1D3416544F6300486B9A /* ViewController.m */,
@@ -2287,6 +2292,7 @@
 				7B27664D16556644009F8A9C /* zip.c in Sources */,
 				7BF4E0BD1656840000CC6743 /* SettingsVC.m in Sources */,
 				7BF4E0C21656D4C300CC6743 /* EditPokeVC.m in Sources */,
+				7B7719BD1663CE960099EA44 /* Move.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

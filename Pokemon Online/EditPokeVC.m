@@ -45,7 +45,7 @@
 	natureSpot = [tempnature rangeOfString:@" "];
 	tempnature = [tempnature substringFromIndex:natureSpot.location+1];
 	natureSpot = [tempnature rangeOfString:@"\n"];
-	self.natureLabel.text = [tempnature substringToIndex:natureSpot.location];
+	[self.natureButton setTitle:[tempnature substringToIndex:natureSpot.location] forState:UIControlStateNormal];
 	
 	if (self.thePokemon.item>=8000) {
 		// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
@@ -56,7 +56,7 @@
 		itemSpot = [tempitem rangeOfString:@" "];
 		tempitem = [tempitem substringFromIndex:itemSpot.location+1];
 		itemSpot = [tempitem rangeOfString:@"\n"];
-		self.itemLabel.text = [tempitem substringToIndex:itemSpot.location];
+		[self.itemButton setTitle:[tempitem substringToIndex:itemSpot.location] forState:UIControlStateNormal];
 	} else {
 		[self.itemImage setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,self.thePokemon.item]]];
 		NSString *iListFile = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/items.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
@@ -65,7 +65,7 @@
 		itemSpot = [tempitem rangeOfString:@" "];
 		tempitem = [tempitem substringFromIndex:itemSpot.location+1];
 		itemSpot = [tempitem rangeOfString:@"\n"];
-		self.itemLabel.text = [tempitem substringToIndex:itemSpot.location];
+		[self.itemButton setTitle:[tempitem substringToIndex:itemSpot.location] forState:UIControlStateNormal];
 	}
 	self.nameLabel.text = self.thePokemon.species;
 	self.nicknameField.text = self.thePokemon.nickname;
@@ -77,13 +77,15 @@
 	}
 	switch (self.thePokemon.gender) {
 		case 0:
-			[self.genderImage setImage:nil];
+			[self.genderSwitch setHidden:YES];
 			break;
 		case 1:
-			[self.genderImage setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/gender1.png",mydelegate.basePath]]];
+			[self.genderSwitch setHidden:NO];
+			[self.genderSwitch setSelectedSegmentIndex:0];
 			break;
 		case 2:
-			[self.genderImage setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/gender2.png",mydelegate.basePath]]];
+			[self.genderSwitch setHidden:NO];
+			[self.genderSwitch setSelectedSegmentIndex:1];
 			break;
 		default:
 			break;
@@ -91,6 +93,9 @@
 	
 	self.happyField.text = [NSString stringWithFormat:@"%d",self.thePokemon.happiness];
 	self.happyStep.value = self.thePokemon.happiness;
+	self.levelField.text = [NSString stringWithFormat:@"%d",self.thePokemon.level];
+	self.levelStep.value = self.thePokemon.level;
+	[self.shinySwitch setOn:self.thePokemon.shiny];
 	
 	// note: ideally the picker would be 300px high, but pickers have a set frame height.
 	self.natureList = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 84, 480, 216)];
@@ -103,6 +108,23 @@
 	[self.view addSubview:self.itemList];
 	self.natureList.hidden = YES;
 	self.itemList.hidden = YES;
+	
+	// set up the EVs
+	self.slideHP.value = self.thePokemon.ev1;
+	self.slideAtk.value = self.thePokemon.ev2;
+	self.slideDef.value = self.thePokemon.ev3;
+	self.slideSpA.value = self.thePokemon.ev4;
+	self.slideSpD.value = self.thePokemon.ev5;
+	self.slideSpe.value = self.thePokemon.ev6;
+	float tot = self.slideAtk.value + self.slideDef.value + self.slideHP.value + self.slideSpA.value + self.slideSpD.value + self.slideSpe.value;
+	[self.slideTotal setValue:tot];
+	[self.textAtk setText:[NSString stringWithFormat:@"%d",(int)self.slideAtk.value]];
+	[self.textDef setText:[NSString stringWithFormat:@"%d",(int)self.slideDef.value]];
+	[self.textHP setText:[NSString stringWithFormat:@"%d",(int)self.slideHP.value]];
+	[self.textSpA setText:[NSString stringWithFormat:@"%d",(int)self.slideSpA.value]];
+	[self.textSpD setText:[NSString stringWithFormat:@"%d",(int)self.slideSpD.value]];
+	[self.textSpe setText:[NSString stringWithFormat:@"%d",(int)self.slideSpe.value]];
+	[self.textTotal setText:[NSString stringWithFormat:@"%d",(int)self.slideTotal.value]];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
@@ -116,7 +138,7 @@
 		natureSpot = [tempnature rangeOfString:@" "];
 		tempnature = [tempnature substringFromIndex:natureSpot.location+1];
 		natureSpot = [tempnature rangeOfString:@"\n"];
-		self.natureLabel.text = [tempnature substringToIndex:natureSpot.location];
+		[self.natureButton setTitle:[tempnature substringToIndex:natureSpot.location] forState:UIControlStateNormal];
 	}
 	else if ([pickerView isEqual:self.itemList]) {
 		if (row>=305) {
@@ -129,10 +151,11 @@
 			itemSpot = [tempitem rangeOfString:@" "];
 			tempitem = [tempitem substringFromIndex:itemSpot.location+1];
 			itemSpot = [tempitem rangeOfString:@"\n"];
-			self.itemLabel.text = [tempitem substringToIndex:itemSpot.location];
+			[self.itemButton setTitle:[tempitem substringToIndex:itemSpot.location] forState:UIControlStateNormal];
 		} else {
 			// it's an item
-			self.thePokemon.item = row;
+			int ind = [[mydelegate.itemAlphaNum objectAtIndex:row] intValue];
+			self.thePokemon.item = ind;
 			[self.itemImage setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,self.thePokemon.item]]];
 			NSString *iListFile = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/items.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
 			NSRange itemSpot = [iListFile rangeOfString:[NSString stringWithFormat:@"%d",self.thePokemon.item]];
@@ -140,7 +163,7 @@
 			itemSpot = [tempitem rangeOfString:@" "];
 			tempitem = [tempitem substringFromIndex:itemSpot.location+1];
 			itemSpot = [tempitem rangeOfString:@"\n"];
-			self.itemLabel.text = [tempitem substringToIndex:itemSpot.location];
+			[self.itemButton setTitle:[tempitem substringToIndex:itemSpot.location] forState:UIControlStateNormal];
 		}
 	}
 	pickerView.hidden = YES;
@@ -178,8 +201,9 @@
 			itemSpot = [tempitem rangeOfString:@"\n"];
 			title = [tempitem substringToIndex:itemSpot.location];
 		} else {
+			int ind = [[mydelegate.itemAlphaNum objectAtIndex:row] intValue];
 			NSString *iListFile = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/items.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
-			NSRange itemSpot = [iListFile rangeOfString:[NSString stringWithFormat:@"%d",row]];
+			NSRange itemSpot = [iListFile rangeOfString:[NSString stringWithFormat:@"%d",ind]];
 			NSString *tempitem = [iListFile substringFromIndex:itemSpot.location];
 			itemSpot = [tempitem rangeOfString:@" "];
 			tempitem = [tempitem substringFromIndex:itemSpot.location+1];
@@ -205,6 +229,72 @@
 {
 	self.thePokemon.happiness = self.happyStep.value;
 	self.happyField.text = [NSString stringWithFormat:@"%d",self.thePokemon.happiness];
+}
+
+- (IBAction)stepLevel:(UIStepper *)sender
+{
+	self.thePokemon.level = self.levelStep.value;
+	self.levelField.text = [NSString stringWithFormat:@"%d",self.thePokemon.level];
+}
+
+- (IBAction)flipShiny:(id)sender
+{
+	if (self.shinySwitch.on) {
+		self.thePokemon.shiny = 1;
+		[self.pokeImage setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,self.thePokemon.number]]];
+	} else {
+		self.thePokemon.shiny = 0;
+		[self.pokeImage setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,self.thePokemon.number]]];
+	}
+}
+
+- (IBAction)flipGender:(id)sender
+{
+	if (self.genderSwitch.selectedSegmentIndex==0) {
+		self.thePokemon.gender = 1;
+	} else {
+		self.thePokemon.gender = 2;
+	}
+}
+
+- (IBAction)slideStat:(UISlider *)sender
+{
+	[sender setValue:((int)((sender.value + 2) / 4) * 4) animated:NO];
+	float tot = self.slideAtk.value + self.slideDef.value + self.slideHP.value + self.slideSpA.value + self.slideSpD.value + self.slideSpe.value;
+	[self.slideTotal setValue:tot];
+	
+	[self.textAtk setText:[NSString stringWithFormat:@"%d",(int)self.slideAtk.value]];
+	[self.textDef setText:[NSString stringWithFormat:@"%d",(int)self.slideDef.value]];
+	[self.textHP setText:[NSString stringWithFormat:@"%d",(int)self.slideHP.value]];
+	[self.textSpA setText:[NSString stringWithFormat:@"%d",(int)self.slideSpA.value]];
+	[self.textSpD setText:[NSString stringWithFormat:@"%d",(int)self.slideSpD.value]];
+	[self.textSpe setText:[NSString stringWithFormat:@"%d",(int)self.slideSpe.value]];
+	[self.textTotal setText:[NSString stringWithFormat:@"%d",(int)self.slideTotal.value]];
+}
+
+- (IBAction)endSlide:(UISlider *)sender
+{
+	float tot = self.slideAtk.value + self.slideDef.value + self.slideHP.value + self.slideSpA.value + self.slideSpD.value + self.slideSpe.value;
+	if (tot>508) {
+		int diff = tot - 508;
+		[sender setValue:((int)sender.value - diff)];
+		[self.slideTotal setValue:508];
+		
+		[self.textAtk setText:[NSString stringWithFormat:@"%d",(int)self.slideAtk.value]];
+		[self.textDef setText:[NSString stringWithFormat:@"%d",(int)self.slideDef.value]];
+		[self.textHP setText:[NSString stringWithFormat:@"%d",(int)self.slideHP.value]];
+		[self.textSpA setText:[NSString stringWithFormat:@"%d",(int)self.slideSpA.value]];
+		[self.textSpD setText:[NSString stringWithFormat:@"%d",(int)self.slideSpD.value]];
+		[self.textSpe setText:[NSString stringWithFormat:@"%d",(int)self.slideSpe.value]];
+		[self.textTotal setText:[NSString stringWithFormat:@"%d",(int)self.slideTotal.value]];
+	}
+	
+	self.thePokemon.ev1 = (int)self.slideHP;
+	self.thePokemon.ev2 = (int)self.slideAtk;
+	self.thePokemon.ev3 = (int)self.slideDef;
+	self.thePokemon.ev4 = (int)self.slideSpA;
+	self.thePokemon.ev5 = (int)self.slideSpD;
+	self.thePokemon.ev6 = (int)self.slideSpe;
 }
 
 - (IBAction)cancel:(id)sender

@@ -17,5 +17,7 @@
 @property (nonatomic, retain) NSString *activeTier;
 @property (nonatomic, retain) NSMutableArray *activeTeam;
 @property (nonatomic, retain) NSString *basePath;
+@property (nonatomic, retain) NSMutableArray *itemAlphaNum;
+@property (nonatomic, retain) NSMutableArray *berryAlphaNum;
 
 @end
