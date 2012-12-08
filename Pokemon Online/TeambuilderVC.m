@@ -8,6 +8,7 @@
 
 #import "TeambuilderVC.h"
 #import "EditPokeVC.h"
+#import "EditMoreVC.h"
 
 @interface TeambuilderVC ()
 
@@ -28,6 +29,33 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(swapToPoke:) name:@"swapToPoke" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(swapToMore:) name:@"swapToMore" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePoke:) name:@"updatePoke" object:nil];
+}
+
+-(void)swapToPoke:(NSNotification *)notis{
+    NSDictionary *dict = notis.userInfo;
+    Pokemon *passedPoke = (Pokemon *)[dict objectForKey:@"poketopass"];
+	NSNumber *passedInd = (NSNumber *)[dict objectForKey:@"indtopass"];
+	EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:passedPoke fromIndex:passedInd.intValue];
+    [self presentViewController:epvc animated:YES completion:NULL];
+}
+
+-(void)swapToMore:(NSNotification *)notis{
+    NSDictionary *dict = notis.userInfo;
+    Pokemon *passedPoke = (Pokemon *)[dict objectForKey:@"poketopass"];
+	NSNumber *passedInd = (NSNumber *)[dict objectForKey:@"indtopass"];
+	EditMoreVC *emvc = [[EditMoreVC alloc] initWithPokemon:passedPoke fromIndex:passedInd.intValue];
+    [self presentViewController:emvc animated:YES completion:NULL];
+}
+
+-(void)updatePoke:(NSNotification *)notis{
+	NSDictionary *dict = notis.userInfo;
+    Pokemon *passedPoke = (Pokemon *)[dict objectForKey:@"poketopass"];
+	NSNumber *passedInd = (NSNumber *)[dict objectForKey:@"indtopass"];
+	[mydelegate.activeTeam replaceObjectAtIndex:passedInd.integerValue withObject:passedPoke];
+	[self refreshInterface];
 }
 
 - (IBAction)handlePokeTap:(UITapGestureRecognizer *)sender
@@ -41,29 +69,29 @@
 		// First column
 		if (x>=10&&x<=159) {
 			if (y>=10&&y<=83) {
-				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:0]];
+				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:0] fromIndex:0];
 				[self presentViewController:epvc animated:YES completion:NULL];
 			}
 			if (y>=93&&y<=166) {
-				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:2]];
+				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:2] fromIndex:2];
 				[self presentViewController:epvc animated:YES completion:NULL];
 			}
 			if (y>=176&&y<=249) {
-				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:4]];
+				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:4] fromIndex:4];
 				[self presentViewController:epvc animated:YES completion:NULL];
 			}
 		}
 		if (x>=168&&x<=317) {
 			if (y>=10&&y<=83) {
-				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:1]];
+				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:1] fromIndex:1];
 				[self presentViewController:epvc animated:YES completion:NULL];
 			}
 			if (y>=93&&y<=166) {
-				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:3]];
+				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:3] fromIndex:3];
 				[self presentViewController:epvc animated:YES completion:NULL];
 			}
 			if (y>=176&&y<=249) {
-				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:5]];
+				EditPokeVC *epvc = [[EditPokeVC alloc] initWithPokemon:[mydelegate.activeTeam objectAtIndex:5] fromIndex:5];
 				[self presentViewController:epvc animated:YES completion:NULL];
 			}
 		}
@@ -74,6 +102,7 @@
 {
 	[mydelegate.activeTeam removeAllObjects];
 	NSString *path = [[NSBundle mainBundle] pathForResource:@"Whump" ofType:@"tp"];
+	//NSString *path = [NSString stringWithFormat:@"%@/Teams/Team1.tp",mydelegate.basePath];
 	NSString *fullcontent = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
 	NSString *content = [[NSString alloc] initWithString:fullcontent];
 	NSString *temp = [[NSString alloc] init];
@@ -331,9 +360,9 @@
 		switch (pokecount) {
 			case 1:
 				// Image
-				[self.pokeView1.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
+				[self.pokeView1.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
 				if (newpoke.shiny) {
-					[self.pokeView1.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
+					[self.pokeView1.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
 				}
 				// Level
 				self.pokeView1.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
@@ -387,16 +416,16 @@
 				// Item
 				if (newpoke.item>=8000) {
 					// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
-					[self.pokeView1.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
+					[self.pokeView1.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
 				} else {
-					[self.pokeView1.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,newpoke.item]]];
+					[self.pokeView1.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Items/%d.png",mydelegate.basePath,newpoke.item]]];
 				}
 				break;
 			case 2:
 				// Image
-				[self.pokeView2.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
+				[self.pokeView2.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
 				if (newpoke.shiny) {
-					[self.pokeView2.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
+					[self.pokeView2.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
 				}
 				// Level
 				self.pokeView2.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
@@ -450,16 +479,16 @@
 				// Item
 				if (newpoke.item>=8000) {
 					// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
-					[self.pokeView2.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
+					[self.pokeView2.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
 				} else {
-					[self.pokeView2.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,newpoke.item]]];
+					[self.pokeView2.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Items/%d.png",mydelegate.basePath,newpoke.item]]];
 				}
 				break;
 			case 3:
 				// Image
-				[self.pokeView3.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
+				[self.pokeView3.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
 				if (newpoke.shiny) {
-					[self.pokeView3.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
+					[self.pokeView3.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
 				}
 				// Level
 				self.pokeView3.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
@@ -513,16 +542,16 @@
 				// Item
 				if (newpoke.item>=8000) {
 					// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
-					[self.pokeView3.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
+					[self.pokeView3.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
 				} else {
-					[self.pokeView3.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,newpoke.item]]];
+					[self.pokeView3.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Items/%d.png",mydelegate.basePath,newpoke.item]]];
 				}
 				break;
 			case 4:
 				// Image
-				[self.pokeView4.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
+				[self.pokeView4.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
 				if (newpoke.shiny) {
-					[self.pokeView4.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
+					[self.pokeView4.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
 				}
 				// Level
 				self.pokeView4.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
@@ -576,16 +605,16 @@
 				// Item
 				if (newpoke.item>=8000) {
 					// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
-					[self.pokeView4.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
+					[self.pokeView4.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
 				} else {
-					[self.pokeView4.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,newpoke.item]]];
+					[self.pokeView4.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Items/%d.png",mydelegate.basePath,newpoke.item]]];
 				}
 				break;
 			case 5:
 				// Image
-				[self.pokeView5.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
+				[self.pokeView5.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
 				if (newpoke.shiny) {
-					[self.pokeView5.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
+					[self.pokeView5.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
 				}
 				// Level
 				self.pokeView5.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
@@ -639,16 +668,16 @@
 				// Item
 				if (newpoke.item>=8000) {
 					// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
-					[self.pokeView5.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
+					[self.pokeView5.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
 				} else {
-					[self.pokeView5.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,newpoke.item]]];
+					[self.pokeView5.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Items/%d.png",mydelegate.basePath,newpoke.item]]];
 				}
 				break;
 			case 6:
 				// Image
-				[self.pokeView6.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
+				[self.pokeView6.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/%d.png",mydelegate.basePath,newpoke.number]]];
 				if (newpoke.shiny) {
-					[self.pokeView6.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
+					[self.pokeView6.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/shiny/%d.png",mydelegate.basePath,newpoke.number]]];
 				}
 				// Level
 				self.pokeView6.level.text = [NSString stringWithFormat:@"Lv. %d",newpoke.level];
@@ -702,9 +731,9 @@
 				// Item
 				if (newpoke.item>=8000) {
 					// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
-					[self.pokeView6.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
+					[self.pokeView6.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Berries/%d.png",mydelegate.basePath,(newpoke.item-7999)]]];
 				} else {
-					[self.pokeView6.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Items/%d.png",mydelegate.basePath,newpoke.item]]];
+					[self.pokeView6.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Items/%d.png",mydelegate.basePath,newpoke.item]]];
 				}
 				break;
 			default:
@@ -712,6 +741,164 @@
 		}
 		pokecount++;
 	}
+}
+
+- (void)refreshInterface
+{
+	// POKE 1
+	Pokemon *temppoke = [mydelegate.activeTeam objectAtIndex:0];
+	// Image
+	[self.pokeView1.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/%d.png",mydelegate.basePath,temppoke.number]]];
+	if (temppoke.shiny) {
+		[self.pokeView1.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/shiny/%d.png",mydelegate.basePath,temppoke.number]]];
+	}
+	// Level
+	self.pokeView1.level.text = [NSString stringWithFormat:@"Lv. %d",temppoke.level];
+	// Nickname
+	self.pokeView1.nickname.text = temppoke.nickname;
+	// Species
+	self.pokeView1.species.text = temppoke.species;
+	// Item
+	if (temppoke.item>=8000) {
+		// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
+		[self.pokeView1.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Berries/%d.png",mydelegate.basePath,(temppoke.item-7999)]]];
+	} else {
+		[self.pokeView1.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Items/%d.png",mydelegate.basePath,temppoke.item]]];
+	}
+	// POKE 2
+	temppoke = [mydelegate.activeTeam objectAtIndex:1];
+	// Image
+	[self.pokeView2.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/%d.png",mydelegate.basePath,temppoke.number]]];
+	if (temppoke.shiny) {
+		[self.pokeView2.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/shiny/%d.png",mydelegate.basePath,temppoke.number]]];
+	}
+	// Level
+	self.pokeView2.level.text = [NSString stringWithFormat:@"Lv. %d",temppoke.level];
+	// Nickname
+	self.pokeView2.nickname.text = temppoke.nickname;
+	// Species
+	self.pokeView2.species.text = temppoke.species;
+	// Item
+	if (temppoke.item>=8000) {
+		// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
+		[self.pokeView2.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Berries/%d.png",mydelegate.basePath,(temppoke.item-7999)]]];
+	} else {
+		[self.pokeView2.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Items/%d.png",mydelegate.basePath,temppoke.item]]];
+	}
+	// POKE 3
+	temppoke = [mydelegate.activeTeam objectAtIndex:2];
+	// Image
+	[self.pokeView3.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/%d.png",mydelegate.basePath,temppoke.number]]];
+	if (temppoke.shiny) {
+		[self.pokeView3.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/shiny/%d.png",mydelegate.basePath,temppoke.number]]];
+	}
+	// Level
+	self.pokeView3.level.text = [NSString stringWithFormat:@"Lv. %d",temppoke.level];
+	// Nickname
+	self.pokeView3.nickname.text = temppoke.nickname;
+	// Species
+	self.pokeView3.species.text = temppoke.species;
+	// Item
+	if (temppoke.item>=8000) {
+		// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
+		[self.pokeView3.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Berries/%d.png",mydelegate.basePath,(temppoke.item-7999)]]];
+	} else {
+		[self.pokeView3.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Items/%d.png",mydelegate.basePath,temppoke.item]]];
+	}
+	// POKE 4
+	temppoke = [mydelegate.activeTeam objectAtIndex:3];
+	// Image
+	[self.pokeView4.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/%d.png",mydelegate.basePath,temppoke.number]]];
+	if (temppoke.shiny) {
+		[self.pokeView4.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/shiny/%d.png",mydelegate.basePath,temppoke.number]]];
+	}
+	// Level
+	self.pokeView4.level.text = [NSString stringWithFormat:@"Lv. %d",temppoke.level];
+	// Nickname
+	self.pokeView4.nickname.text = temppoke.nickname;
+	// Species
+	self.pokeView4.species.text = temppoke.species;
+	// Item
+	if (temppoke.item>=8000) {
+		// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
+		[self.pokeView4.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Berries/%d.png",mydelegate.basePath,(temppoke.item-7999)]]];
+	} else {
+		[self.pokeView4.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Items/%d.png",mydelegate.basePath,temppoke.item]]];
+	}
+	// POKE 5
+	temppoke = [mydelegate.activeTeam objectAtIndex:4];
+	// Image
+	[self.pokeView5.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/%d.png",mydelegate.basePath,temppoke.number]]];
+	if (temppoke.shiny) {
+		[self.pokeView5.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/shiny/%d.png",mydelegate.basePath,temppoke.number]]];
+	}
+	// Level
+	self.pokeView5.level.text = [NSString stringWithFormat:@"Lv. %d",temppoke.level];
+	// Nickname
+	self.pokeView5.nickname.text = temppoke.nickname;
+	// Species
+	self.pokeView5.species.text = temppoke.species;
+	// Item
+	if (temppoke.item>=8000) {
+		// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
+		[self.pokeView5.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Berries/%d.png",mydelegate.basePath,(temppoke.item-7999)]]];
+	} else {
+		[self.pokeView5.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Items/%d.png",mydelegate.basePath,temppoke.item]]];
+	}
+	// POKE 6
+	temppoke = [mydelegate.activeTeam objectAtIndex:5];
+	// Image
+	[self.pokeView6.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/%d.png",mydelegate.basePath,temppoke.number]]];
+	if (temppoke.shiny) {
+		[self.pokeView6.image setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/shiny/%d.png",mydelegate.basePath,temppoke.number]]];
+	}
+	// Level
+	self.pokeView6.level.text = [NSString stringWithFormat:@"Lv. %d",temppoke.level];
+	// Nickname
+	self.pokeView6.nickname.text = temppoke.nickname;
+	// Species
+	self.pokeView6.species.text = temppoke.species;
+	// Item
+	if (temppoke.item>=8000) {
+		// Berries are given their own set of item numbers starting at 8000, but the images for them still start at 1.png
+		[self.pokeView6.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Berries/%d.png",mydelegate.basePath,(temppoke.item-7999)]]];
+	} else {
+		[self.pokeView6.item setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/Items/%d.png",mydelegate.basePath,temppoke.item]]];
+	}
+}
+
+- (IBAction)saveTeam:(id)sender
+{
+	Pokemon *poke;
+	NSString *path = [NSString stringWithFormat:@"%@/Teams/Team1.tp",mydelegate.basePath];
+	// Team
+	NSString *ostr = [NSString stringWithFormat:@"<Team version=\"%d\" gen=\"%d\" defaultTier=\"%@\" subgen=\"%d\">\n",1,mydelegate.activeGen,mydelegate.activeTier,mydelegate.activeSubgen];
+	
+	// Pokemon
+	for (int x=0; x<6; x++) {
+		poke = [mydelegate.activeTeam objectAtIndex:x];
+		ostr = [NSString stringWithFormat:@"%@<Pokemon Item=\"%d\" Ability=\"%d\" Num=\"%d\" Nature=\"%d\" Shiny=\"%d\" Nickname=\"%@\" Gen=\"%d\" Forme=\"%d\" Happiness=\"%d\" Lvl=\"%d\" Gender=\"%d\" SubGen=\"%d\">\n",ostr,poke.item,poke.ability,poke.number,poke.nature,poke.shiny,poke.nickname,poke.generation,poke.forme,poke.happiness,poke.level,poke.gender,poke.subgeneration];
+		ostr = [NSString stringWithFormat:@"%@<Move>%d</Move>\n",ostr,poke.move1];
+		ostr = [NSString stringWithFormat:@"%@<Move>%d</Move>\n",ostr,poke.move2];
+		ostr = [NSString stringWithFormat:@"%@<Move>%d</Move>\n",ostr,poke.move3];
+		ostr = [NSString stringWithFormat:@"%@<Move>%d</Move>\n",ostr,poke.move4];
+		ostr = [NSString stringWithFormat:@"%@<DV>%d</DV>\n",ostr,poke.dv1];
+		ostr = [NSString stringWithFormat:@"%@<DV>%d</DV>\n",ostr,poke.dv2];
+		ostr = [NSString stringWithFormat:@"%@<DV>%d</DV>\n",ostr,poke.dv3];
+		ostr = [NSString stringWithFormat:@"%@<DV>%d</DV>\n",ostr,poke.dv4];
+		ostr = [NSString stringWithFormat:@"%@<DV>%d</DV>\n",ostr,poke.dv5];
+		ostr = [NSString stringWithFormat:@"%@<DV>%d</DV>\n",ostr,poke.dv6];
+		ostr = [NSString stringWithFormat:@"%@<EV>%d</EV>\n",ostr,poke.ev1];
+		ostr = [NSString stringWithFormat:@"%@<EV>%d</EV>\n",ostr,poke.ev2];
+		ostr = [NSString stringWithFormat:@"%@<EV>%d</EV>\n",ostr,poke.ev3];
+		ostr = [NSString stringWithFormat:@"%@<EV>%d</EV>\n",ostr,poke.ev4];
+		ostr = [NSString stringWithFormat:@"%@<EV>%d</EV>\n",ostr,poke.ev5];
+		ostr = [NSString stringWithFormat:@"%@<EV>%d</EV>\n",ostr,poke.ev6];
+		ostr = [NSString stringWithFormat:@"%@</Pokemon>\n",ostr];
+	}
+	ostr = [NSString stringWithFormat:@"%@</Team>\n",ostr];
+	
+	[ostr writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
 - (void)didReceiveMemoryWarning

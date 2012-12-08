@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "Pokemon.h"
+#import "PokePickView.h"
 
 @interface EditPokeVC : UIViewController <UIPickerViewDataSource,UIPickerViewDelegate>
 
 @property (nonatomic, retain) Pokemon *thePokemon;
+@property (nonatomic, retain) NSNumber *theIndex;
 @property (nonatomic, retain) IBOutlet UIImageView *pokeImage;
 @property (nonatomic, retain) IBOutlet UIImageView *itemImage;
 @property (nonatomic, retain) IBOutlet UILabel *nameLabel;
@@ -20,10 +22,8 @@
 @property (nonatomic, retain) IBOutlet UIImageView *type2img;
 @property (nonatomic, retain) IBOutlet UITextField *nicknameField;
 @property (nonatomic, retain) IBOutlet UIButton *natureButton;
-//@property (nonatomic, retain) IBOutlet UILabel *natureLabel;
 @property (nonatomic, retain) UIPickerView *natureList;
 @property (nonatomic, retain) IBOutlet UIButton *itemButton;
-//@property (nonatomic, retain) IBOutlet UILabel *itemLabel;
 @property (nonatomic, retain) UIPickerView *itemList;
 @property (nonatomic, retain) IBOutlet UIStepper *happyStep;
 @property (nonatomic, retain) IBOutlet UITextField *happyField;
@@ -46,7 +46,7 @@
 @property (nonatomic, retain) IBOutlet UITextField *textSpD;
 @property (nonatomic, retain) IBOutlet UILabel *textTotal;
 
-- (id)initWithPokemon:(Pokemon *)poke;
+- (id)initWithPokemon:(Pokemon *)poke fromIndex:(int)ind;
 - (IBAction)pickNature:(id)sender;
 - (IBAction)pickItem:(id)sender;
 - (IBAction)stepHappy:(UIStepper *)sender;
@@ -55,6 +55,10 @@
 - (IBAction)flipGender:(id)sender;
 - (IBAction)slideStat:(UISlider *)sender;
 - (IBAction)endSlide:(UISlider *)sender;
+- (IBAction)editMore:(id)sender;
+- (IBAction)editSpecies:(UITapGestureRecognizer *)sender;
 - (IBAction)cancel:(id)sender;
+- (IBAction)save:(id)sender;
+- (void)setupInterface;
 
 @end

@@ -19,7 +19,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 	
-	NSString *imgPath = [NSString stringWithFormat:@"%@/black-white/1.png",mydelegate.basePath];
+	NSString *imgPath = [NSString stringWithFormat:@"%@/images/black-white/1.png",mydelegate.basePath];
 	[self.testImage setImage:[UIImage imageWithContentsOfFile:imgPath]];
 }
 

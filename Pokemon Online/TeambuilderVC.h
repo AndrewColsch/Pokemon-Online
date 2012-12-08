@@ -22,5 +22,7 @@
 
 - (IBAction)handlePokeTap:(UITapGestureRecognizer *)sender;
 - (IBAction)loadTeam:(id)sender;
+- (void)refreshInterface;
+- (IBAction)saveTeam:(id)sender;
 
 @end

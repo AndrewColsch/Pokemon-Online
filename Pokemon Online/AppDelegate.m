@@ -27,12 +27,14 @@
 	NSString *zipPath = [[NSBundle mainBundle] pathForResource:@"sprites_5g" ofType:@"zip"];
 	NSRange lastslash = [zipPath rangeOfString:@"/" options:NSBackwardsSearch];
 	self.basePath = [zipPath substringToIndex:lastslash.location+1];
+	/*
 	[SSZipArchive unzipFileAtPath:zipPath toDestination:self.basePath];
-	
+
 	zipPath = [[NSBundle mainBundle] pathForResource:@"Berries" ofType:@"zip"];
 	[SSZipArchive unzipFileAtPath:zipPath toDestination:[NSString stringWithFormat:@"%@/Berries/",self.basePath]];
 	zipPath = [[NSBundle mainBundle] pathForResource:@"Items" ofType:@"zip"];
 	[SSZipArchive unzipFileAtPath:zipPath toDestination:[NSString stringWithFormat:@"%@/Items/",self.basePath]];
+	 */
 	
 	// attempting to alphabetize the item arrays
 	self.itemAlphaNum = [[NSMutableArray alloc] init];

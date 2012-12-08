@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B10307516727631007D0E1B /* PokePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B10307316727631007D0E1B /* PokePickView.m */; };
+		7B10307616727631007D0E1B /* PokePickView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B10307416727631007D0E1B /* PokePickView.xib */; };
+		7B17358C166D8E8F00173047 /* Teams in Resources */ = {isa = PBXBuildFile; fileRef = 7B17358B166D8E8F00173047 /* Teams */; };
 		7B27663A16555D8A009F8A9C /* TBPokePreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B27663916555D8A009F8A9C /* TBPokePreviewView.m */; };
-		7B27663E165564E4009F8A9C /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B27663D165564E4009F8A9C /* SSZipArchive.m */; };
-		7B27664A16556644009F8A9C /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 7B27664216556644009F8A9C /* ioapi.c */; };
-		7B27664B16556644009F8A9C /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 7B27664416556644009F8A9C /* mztools.c */; };
-		7B27664C16556644009F8A9C /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7B27664616556644009F8A9C /* unzip.c */; };
-		7B27664D16556644009F8A9C /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 7B27664816556644009F8A9C /* zip.c */; };
 		7B2766501655698A009F8A9C /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B27664F1655698A009F8A9C /* libz.1.2.5.dylib */; };
 		7B613FD9165499FC009E4F3E /* accuracy_1g.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7B613F50165499FC009E4F3E /* accuracy_1g.txt */; };
 		7B613FDA165499FC009E4F3E /* category_1g.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7B613F51165499FC009E4F3E /* category_1g.txt */; };
@@ -416,6 +414,9 @@
 		7BCF20781654524500486B9A /* types.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF1EFB1654524400486B9A /* types.txt */; };
 		7BCF20791654524500486B9A /* typestable.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF1EFC1654524400486B9A /* typestable.txt */; };
 		7BCF207A1654524500486B9A /* typestable_gen1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF1EFD1654524400486B9A /* typestable_gen1.txt */; };
+		7BCF66601666B13D005B1182 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF665F1666B13D005B1182 /* images */; };
+		7BD5704D16653095006D261E /* EditMoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BD5704B16653095006D261E /* EditMoreVC.m */; };
+		7BD5704E16653095006D261E /* EditMoreVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BD5704C16653095006D261E /* EditMoreVC.xib */; };
 		7BF4E0BD1656840000CC6743 /* SettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF4E0BC1656840000CC6743 /* SettingsVC.m */; };
 		7BF4E0C21656D4C300CC6743 /* EditPokeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF4E0C01656D4C300CC6743 /* EditPokeVC.m */; };
 		7BF4E0C31656D4C300CC6743 /* EditPokeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4E0C11656D4C300CC6743 /* EditPokeVC.xib */; };
@@ -455,19 +456,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7B10307216727631007D0E1B /* PokePickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PokePickView.h; sourceTree = "<group>"; };
+		7B10307316727631007D0E1B /* PokePickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PokePickView.m; sourceTree = "<group>"; };
+		7B10307416727631007D0E1B /* PokePickView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PokePickView.xib; sourceTree = "<group>"; };
+		7B17358B166D8E8F00173047 /* Teams */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Teams; sourceTree = "<group>"; };
 		7B27663816555D8A009F8A9C /* TBPokePreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBPokePreviewView.h; sourceTree = "<group>"; };
 		7B27663916555D8A009F8A9C /* TBPokePreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBPokePreviewView.m; sourceTree = "<group>"; };
-		7B27663D165564E4009F8A9C /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
-		7B27663F16556504009F8A9C /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
-		7B27664116556644009F8A9C /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
-		7B27664216556644009F8A9C /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
-		7B27664416556644009F8A9C /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
-		7B27664516556644009F8A9C /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
-		7B27664616556644009F8A9C /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
-		7B27664716556644009F8A9C /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
-		7B27664816556644009F8A9C /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
-		7B27664916556644009F8A9C /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
-		7B27664E16556698009F8A9C /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
 		7B27664F1655698A009F8A9C /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		7B613F50165499FC009E4F3E /* accuracy_1g.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = accuracy_1g.txt; sourceTree = "<group>"; };
 		7B613F51165499FC009E4F3E /* category_1g.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = category_1g.txt; sourceTree = "<group>"; };
@@ -880,6 +874,10 @@
 		7BCF1EFB1654524400486B9A /* types.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = types.txt; sourceTree = "<group>"; };
 		7BCF1EFC1654524400486B9A /* typestable.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = typestable.txt; sourceTree = "<group>"; };
 		7BCF1EFD1654524400486B9A /* typestable_gen1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = typestable_gen1.txt; sourceTree = "<group>"; };
+		7BCF665F1666B13D005B1182 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
+		7BD5704A16653095006D261E /* EditMoreVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditMoreVC.h; sourceTree = "<group>"; };
+		7BD5704B16653095006D261E /* EditMoreVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMoreVC.m; sourceTree = "<group>"; };
+		7BD5704C16653095006D261E /* EditMoreVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditMoreVC.xib; sourceTree = "<group>"; };
 		7BF4E0BB1656840000CC6743 /* SettingsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsVC.h; sourceTree = "<group>"; };
 		7BF4E0BC1656840000CC6743 /* SettingsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsVC.m; sourceTree = "<group>"; };
 		7BF4E0BF1656D4C300CC6743 /* EditPokeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPokeVC.h; sourceTree = "<group>"; };
@@ -935,22 +933,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7B27664016556644009F8A9C /* minizip */ = {
-			isa = PBXGroup;
-			children = (
-				7B27664116556644009F8A9C /* crypt.h */,
-				7B27664216556644009F8A9C /* ioapi.c */,
-				7B27664E16556698009F8A9C /* ioapi.h */,
-				7B27664416556644009F8A9C /* mztools.c */,
-				7B27664516556644009F8A9C /* mztools.h */,
-				7B27664616556644009F8A9C /* unzip.c */,
-				7B27664716556644009F8A9C /* unzip.h */,
-				7B27664816556644009F8A9C /* zip.c */,
-				7B27664916556644009F8A9C /* zip.h */,
-			);
-			path = minizip;
-			sourceTree = "<group>";
-		};
 		7B613F4E165499FC009E4F3E /* moves */ = {
 			isa = PBXGroup;
 			children = (
@@ -1555,6 +1537,12 @@
 				7BF4E0BF1656D4C300CC6743 /* EditPokeVC.h */,
 				7BF4E0C01656D4C300CC6743 /* EditPokeVC.m */,
 				7BF4E0C11656D4C300CC6743 /* EditPokeVC.xib */,
+				7BD5704A16653095006D261E /* EditMoreVC.h */,
+				7BD5704B16653095006D261E /* EditMoreVC.m */,
+				7BD5704C16653095006D261E /* EditMoreVC.xib */,
+				7B10307216727631007D0E1B /* PokePickView.h */,
+				7B10307316727631007D0E1B /* PokePickView.m */,
+				7B10307416727631007D0E1B /* PokePickView.xib */,
 				7B27663816555D8A009F8A9C /* TBPokePreviewView.h */,
 				7B27663916555D8A009F8A9C /* TBPokePreviewView.m */,
 				7BCF1D5A1654524400486B9A /* db */,
@@ -1566,6 +1554,7 @@
 		7BCF1D1F16544F6200486B9A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7B17358B166D8E8F00173047 /* Teams */,
 				7BCF1D2016544F6200486B9A /* Pokemon Online-Info.plist */,
 				7BCF1D2116544F6200486B9A /* InfoPlist.strings */,
 				7BCF1D2416544F6200486B9A /* main.m */,
@@ -1575,10 +1564,7 @@
 				7BCF1D2C16544F6200486B9A /* Default@2x.png */,
 				7BCF1D2E16544F6200486B9A /* Default-568h@2x.png */,
 				7BCF1D58165451DA00486B9A /* Whump.tp */,
-				7B27664016556644009F8A9C /* minizip */,
 				7B27664F1655698A009F8A9C /* libz.1.2.5.dylib */,
-				7B27663F16556504009F8A9C /* SSZipArchive.h */,
-				7B27663D165564E4009F8A9C /* SSZipArchive.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1605,6 +1591,7 @@
 		7BCF1D5A1654524400486B9A /* db */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF665F1666B13D005B1182 /* images */,
 				7BCF1D5B1654524400486B9A /* abilities */,
 				7BCF1D641654524400486B9A /* categories */,
 				7BCF1D661654524400486B9A /* credits.html */,
@@ -2245,6 +2232,10 @@
 				7BF4E0EF1656D86D00CC6743 /* type15.png in Resources */,
 				7BF4E0F01656D86D00CC6743 /* type16.png in Resources */,
 				7BF4E0F11656D86D00CC6743 /* type17.png in Resources */,
+				7BD5704E16653095006D261E /* EditMoreVC.xib in Resources */,
+				7BCF66601666B13D005B1182 /* images in Resources */,
+				7B17358C166D8E8F00173047 /* Teams in Resources */,
+				7B10307616727631007D0E1B /* PokePickView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2285,14 +2276,11 @@
 				7BCF1D551654500D00486B9A /* TeambuilderVC.m in Sources */,
 				7B6141E816549F5A009E4F3E /* Pokemon.m in Sources */,
 				7B27663A16555D8A009F8A9C /* TBPokePreviewView.m in Sources */,
-				7B27663E165564E4009F8A9C /* SSZipArchive.m in Sources */,
-				7B27664A16556644009F8A9C /* ioapi.c in Sources */,
-				7B27664B16556644009F8A9C /* mztools.c in Sources */,
-				7B27664C16556644009F8A9C /* unzip.c in Sources */,
-				7B27664D16556644009F8A9C /* zip.c in Sources */,
 				7BF4E0BD1656840000CC6743 /* SettingsVC.m in Sources */,
 				7BF4E0C21656D4C300CC6743 /* EditPokeVC.m in Sources */,
 				7B7719BD1663CE960099EA44 /* Move.m in Sources */,
+				7BD5704D16653095006D261E /* EditMoreVC.m in Sources */,
+				7B10307516727631007D0E1B /* PokePickView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

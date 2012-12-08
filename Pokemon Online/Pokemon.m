@@ -19,7 +19,7 @@
 	self.shiny = 0;
 	self.nickname = @"Missingno";
 	self.species = @"Missingno";
-	self.gender = 0;
+	self.generation = 0;
 	self.forme = 0;
 	self.happiness = 0;
 	self.level = 0;
@@ -56,7 +56,7 @@
 	self.shiny = sh;
 	self.nickname = nm;
 	self.species = sp;
-	self.gender = ge;
+	self.generation = ge;
 	self.forme = fo;
 	self.happiness = ha;
 	self.level = le;
@@ -80,6 +80,43 @@
 	self.ev4 = e4;
 	self.ev5 = e5;
 	self.ev6 = e6;
+	
+	return self;
+}
+
+- (id)initWithPokemon:(Pokemon *)oldPoke
+{
+	self.item = oldPoke.item;
+	self.ability = oldPoke.ability;
+	self.number = oldPoke.number;
+	self.nature = oldPoke.nature;
+	self.shiny = oldPoke.shiny;
+	self.nickname = oldPoke.nickname;
+	self.species = oldPoke.species;
+	self.generation = oldPoke.generation;
+	self.forme = oldPoke.forme;
+	self.happiness = oldPoke.happiness;
+	self.level = oldPoke.level;
+	self.gender = oldPoke.gender;
+	self.subgeneration = oldPoke.subgeneration;
+	self.type1 = oldPoke.type1;
+	self.type2 = oldPoke.type2;
+	self.move1 = oldPoke.move1;
+	self.move2 = oldPoke.move2;
+	self.move3 = oldPoke.move3;
+	self.move4 = oldPoke.move4;
+	self.dv1 = oldPoke.dv1;
+	self.dv2 = oldPoke.dv2;
+	self.dv3 = oldPoke.dv3;
+	self.dv4 = oldPoke.dv4;
+	self.dv5 = oldPoke.dv5;
+	self.dv6 = oldPoke.dv6;
+	self.ev1 = oldPoke.ev1;
+	self.ev2 = oldPoke.ev2;
+	self.ev3 = oldPoke.ev3;
+	self.ev4 = oldPoke.ev4;
+	self.ev5 = oldPoke.ev5;
+	self.ev6 = oldPoke.ev6;
 	
 	return self;
 }
