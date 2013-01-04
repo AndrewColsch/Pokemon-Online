@@ -43,5 +43,6 @@
 - (IBAction)editSpecies:(UITapGestureRecognizer *)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)save:(id)sender;
+- (void)setupInterface;
 
 @end

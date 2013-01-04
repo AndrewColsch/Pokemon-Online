@@ -32,6 +32,8 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(swapToPoke:) name:@"swapToPoke" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(swapToMore:) name:@"swapToMore" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePoke:) name:@"updatePoke" object:nil];
+	self.teamList = [[NSMutableArray alloc] init];
+	[self refreshInterface];
 }
 
 -(void)swapToPoke:(NSNotification *)notis{
@@ -56,6 +58,12 @@
 	NSNumber *passedInd = (NSNumber *)[dict objectForKey:@"indtopass"];
 	[mydelegate.activeTeam replaceObjectAtIndex:passedInd.integerValue withObject:passedPoke];
 	[self refreshInterface];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+	[textField resignFirstResponder];
+	return YES;
 }
 
 - (IBAction)handlePokeTap:(UITapGestureRecognizer *)sender
@@ -98,15 +106,68 @@
 	}
 }
 
-- (IBAction)loadTeam:(id)sender
+- (IBAction)listTeams:(id)sender
 {
-	[mydelegate.activeTeam removeAllObjects];
-	NSString *path = [[NSBundle mainBundle] pathForResource:@"Whump" ofType:@"tp"];
-	//NSString *path = [NSString stringWithFormat:@"%@/Teams/Team1.tp",mydelegate.basePath];
+	NSString *path = [NSString stringWithFormat:@"%@/Teams.tp",mydelegate.basePath];
+	NSString *istr = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+	[self.teamList removeAllObjects];
+	
+	NSRange ranger = [istr rangeOfString:@"<Team"];
+	while (ranger.location!=NSNotFound) {
+		NSString *temp = [istr substringFromIndex:ranger.location];
+		ranger = [temp rangeOfString:@"teamName="];
+		temp = [temp substringFromIndex:ranger.location+10];
+		ranger = [temp rangeOfString:@"\""];
+		temp = [temp substringToIndex:ranger.location];
+		[self.teamList addObject:[[NSString alloc] initWithString:temp]];
+		ranger = [istr rangeOfString:@"<Team"];
+		istr = [istr substringFromIndex:ranger.location+5];
+		ranger = [istr rangeOfString:@"<Team"];
+	}
+
+	UIActionSheet *teams = [[UIActionSheet alloc] initWithTitle:@"Select Team" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles: nil];
+	for (int x=0; x<self.teamList.count; x++) {
+		[teams addButtonWithTitle:[self.teamList objectAtIndex:x]];
+	}
+	teams.cancelButtonIndex = [teams addButtonWithTitle:@"Cancel"];
+	[teams showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	NSString *path = [NSString stringWithFormat:@"%@/Teams.tp",mydelegate.basePath];
 	NSString *fullcontent = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
 	NSString *content = [[NSString alloc] initWithString:fullcontent];
 	NSString *temp = [[NSString alloc] init];
+	NSString *tname = [[NSString alloc] init];
 	NSRange ranger;
+	
+	// Which team is being loaded?
+	if (buttonIndex==actionSheet.cancelButtonIndex) {
+		// canceled, nevermind
+		return;
+	} else {
+		tname = [self.teamList objectAtIndex:buttonIndex];
+		[mydelegate.activeTeam removeAllObjects];
+	}
+	ranger = [content rangeOfString:@"<Team"];
+	content = [content substringFromIndex:ranger.location];
+	ranger = [content rangeOfString:@"teamName="];
+	temp = [content substringFromIndex:ranger.location+10];
+	ranger = [temp rangeOfString:@"\""];
+	temp = [temp substringToIndex:ranger.location];
+	while (![temp isEqualToString:tname]) {
+		ranger = [content rangeOfString:@"<Team"];
+		content = [content substringFromIndex:ranger.location+5];
+		ranger = [content rangeOfString:@"<Team"];
+		content = [content substringFromIndex:ranger.location];
+		ranger = [content rangeOfString:@"teamName="];
+		temp = [content substringFromIndex:ranger.location+10];
+		ranger = [temp rangeOfString:@"\""];
+		temp = [temp substringToIndex:ranger.location];
+	}
+	ranger = [content rangeOfString:@"</Team>"];
+	content = [content substringToIndex:ranger.location];
 	
 	// Generation
 	ranger = [content rangeOfString:@"gen="];
@@ -869,10 +930,19 @@
 
 - (IBAction)saveTeam:(id)sender
 {
+	if ([self.teamName.text isEqualToString:@""]) {
+		return;
+	}
 	Pokemon *poke;
-	NSString *path = [NSString stringWithFormat:@"%@/Teams/Team1.tp",mydelegate.basePath];
+	NSString *path = [NSString stringWithFormat:@"%@/Teams.tp",mydelegate.basePath];
+	NSString *istr = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+	NSString *theName = self.teamName.text;
+	
+	// If a team of that name already exists, remove it first
+	istr = [self removeTeamWithName:theName fromList:istr];
+	
 	// Team
-	NSString *ostr = [NSString stringWithFormat:@"<Team version=\"%d\" gen=\"%d\" defaultTier=\"%@\" subgen=\"%d\">\n",1,mydelegate.activeGen,mydelegate.activeTier,mydelegate.activeSubgen];
+	NSString *ostr = [NSString stringWithFormat:@"%@<Team version=\"%d\" gen=\"%d\" defaultTier=\"%@\" subgen=\"%d\" teamName=\"%@\">\n",istr,1,mydelegate.activeGen,mydelegate.activeTier,mydelegate.activeSubgen,self.teamName.text];
 	
 	// Pokemon
 	for (int x=0; x<6; x++) {
@@ -899,6 +969,61 @@
 	ostr = [NSString stringWithFormat:@"%@</Team>\n",ostr];
 	
 	[ostr writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
+}
+
+- (IBAction)newTeam:(id)sender
+{
+	[mydelegate.activeTeam removeAllObjects];
+	[mydelegate.activeTeam addObject:[[Pokemon alloc] init]];
+	[mydelegate.activeTeam addObject:[[Pokemon alloc] init]];
+	[mydelegate.activeTeam addObject:[[Pokemon alloc] init]];
+	[mydelegate.activeTeam addObject:[[Pokemon alloc] init]];
+	[mydelegate.activeTeam addObject:[[Pokemon alloc] init]];
+	[mydelegate.activeTeam addObject:[[Pokemon alloc] init]];
+	[self refreshInterface];
+}
+
+- (IBAction)done:(id)sender
+{
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (NSString *)removeTeamWithName:(NSString *)name fromList:(NSString *)list
+{
+	if ([list rangeOfString:[NSString stringWithFormat:@"teamName=\%@\"",name]].location==NSNotFound) {
+		return list;
+	}
+	NSString *temp = [NSString stringWithString:list];
+	NSString *temp2;
+	int num = 0;
+	bool searching = YES;
+	
+	NSRange ranger = [temp rangeOfString:@"<Team"];
+	while (searching) {
+		NSRange r2 = [temp rangeOfString:[NSString stringWithFormat:@"teamName=\"%@\"",name]];
+		if (ranger.location==NSNotFound) {
+			// IT IS TIME
+			searching = NO;
+			num -= 5;
+			temp2 = @"";
+			temp = [list substringToIndex:num];
+		}
+		else if (r2.location<ranger.location) {
+			// IT IS TIME
+			searching = NO;
+			num -= 5;
+			temp2 = temp;
+			temp = [list substringToIndex:num];
+			ranger = [temp2 rangeOfString:@"</Team>"];
+			temp2 = [temp2 substringFromIndex:ranger.location+8];
+		} else {
+			num += ranger.location+5;
+			temp = [temp substringFromIndex:ranger.location+5];
+			ranger = [temp rangeOfString:@"<Team"];
+		}
+	}
+	
+	return [NSString stringWithFormat:@"%@%@",temp,temp2];
 }
 
 - (void)didReceiveMemoryWarning

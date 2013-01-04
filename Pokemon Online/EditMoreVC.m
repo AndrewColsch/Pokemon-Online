@@ -35,6 +35,182 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSpecies:) name:@"updateSpecies" object:nil];
+	[self setupInterface];
+}
+
+- (IBAction)cycleIVs:(id)sender // for cycling between HP, ATK, etc.
+{
+	self.currentIV++;
+	if (self.currentIV>5) {
+		self.currentIV = 0;
+	}
+	
+	switch (self.currentIV) {
+		case 0:
+			[self.IVButton setTitle:[NSString stringWithFormat:@"HP: %d",self.thePokemon.dv1] forState:UIControlStateNormal];
+			[self.IVStepper setValue:self.thePokemon.dv1];
+			break;
+		case 1:
+			[self.IVButton setTitle:[NSString stringWithFormat:@"ATK: %d",self.thePokemon.dv2] forState:UIControlStateNormal];
+			[self.IVStepper setValue:self.thePokemon.dv2];
+			break;
+		case 2:
+			[self.IVButton setTitle:[NSString stringWithFormat:@"DEF: %d",self.thePokemon.dv3] forState:UIControlStateNormal];
+			[self.IVStepper setValue:self.thePokemon.dv3];
+			break;
+		case 3:
+			[self.IVButton setTitle:[NSString stringWithFormat:@"SPA: %d",self.thePokemon.dv4] forState:UIControlStateNormal];
+			[self.IVStepper setValue:self.thePokemon.dv4];
+			break;
+		case 4:
+			[self.IVButton setTitle:[NSString stringWithFormat:@"SPD: %d",self.thePokemon.dv5] forState:UIControlStateNormal];
+			[self.IVStepper setValue:self.thePokemon.dv5];
+			break;
+		case 5:
+			[self.IVButton setTitle:[NSString stringWithFormat:@"SPE: %d",self.thePokemon.dv6] forState:UIControlStateNormal];
+			[self.IVStepper setValue:self.thePokemon.dv6];
+			break;
+		default:
+			break;
+	}
+}
+
+- (IBAction)changeIV:(id)sender // for changing the value of the currently displayed IV
+{
+	switch (self.currentIV) {
+		case 0:
+			self.thePokemon.dv1 = (int)self.IVStepper.value;
+			[self.IVButton setTitle:[NSString stringWithFormat:@"HP: %d",self.thePokemon.dv1] forState:UIControlStateNormal];
+			break;
+		case 1:
+			self.thePokemon.dv2 = (int)self.IVStepper.value;
+			[self.IVButton setTitle:[NSString stringWithFormat:@"ATK: %d",self.thePokemon.dv2] forState:UIControlStateNormal];
+			break;
+		case 2:
+			self.thePokemon.dv3 = (int)self.IVStepper.value;
+			[self.IVButton setTitle:[NSString stringWithFormat:@"DEF: %d",self.thePokemon.dv3] forState:UIControlStateNormal];
+			break;
+		case 3:
+			self.thePokemon.dv4 = (int)self.IVStepper.value;
+			[self.IVButton setTitle:[NSString stringWithFormat:@"SPA: %d",self.thePokemon.dv4] forState:UIControlStateNormal];
+			break;
+		case 4:
+			self.thePokemon.dv5 = (int)self.IVStepper.value;
+			[self.IVButton setTitle:[NSString stringWithFormat:@"SPD: %d",self.thePokemon.dv5] forState:UIControlStateNormal];
+			break;
+		case 5:
+			self.thePokemon.dv6 = (int)self.IVStepper.value;
+			[self.IVButton setTitle:[NSString stringWithFormat:@"SPE: %d",self.thePokemon.dv6] forState:UIControlStateNormal];
+			break;
+		default:
+			break;
+	}
+}
+
+- (IBAction)cycleAbilities:(id)sender
+{
+	if ([self.abilityButton.titleLabel.text isEqualToString:self.ability1]) {
+		if (![self.ability2 isEqualToString:@"NONE"]) {
+			[self.abilityButton setTitle:self.ability2 forState:UIControlStateNormal];
+			[self.abilityDesc setText:self.abdesc2];
+			self.thePokemon.ability = self.ab2;
+		} else if (![self.ability3 isEqualToString:@"NONE"]) {
+			[self.abilityButton setTitle:self.ability3 forState:UIControlStateNormal];
+			[self.abilityDesc setText:self.abdesc3];
+			self.thePokemon.ability = self.ab3;
+		}
+	} else if ([self.abilityButton.titleLabel.text isEqualToString:self.ability2]) {
+		if (![self.ability3 isEqualToString:@"NONE"]) {
+			[self.abilityButton setTitle:self.ability3 forState:UIControlStateNormal];
+			[self.abilityDesc setText:self.abdesc3];
+			self.thePokemon.ability = self.ab3;
+		} else if (![self.ability1 isEqualToString:@"NONE"]) {
+			[self.abilityButton setTitle:self.ability1 forState:UIControlStateNormal];
+			[self.abilityDesc setText:self.abdesc1];
+			self.thePokemon.ability = self.ab1;
+		}
+	} else if ([self.abilityButton.titleLabel.text isEqualToString:self.ability3]) {
+		if (![self.ability1 isEqualToString:@"NONE"]) {
+			[self.abilityButton setTitle:self.ability1 forState:UIControlStateNormal];
+			[self.abilityDesc setText:self.abdesc1];
+			self.thePokemon.ability = self.ab1;
+		} else if (![self.ability2 isEqualToString:@"NONE"]) {
+			[self.abilityButton setTitle:self.ability2 forState:UIControlStateNormal];
+			[self.abilityDesc setText:self.abdesc2];
+			self.thePokemon.ability = self.ab2;
+		}
+	}
+}
+
+- (IBAction)goBack:(id)sender
+{
+	Pokemon *passPoke = self.thePokemon;
+	NSNumber *passInd = self.theIndex;
+	[self dismissViewControllerAnimated:YES completion:^{
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"swapToPoke" object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:passPoke,@"poketopass",passInd,@"indtopass",nil]];}];
+}
+
+- (IBAction)editSpecies:(UITapGestureRecognizer *)sender
+{
+	if (sender.state==UIGestureRecognizerStateEnded) {
+		PokePickView *ppv = [[PokePickView alloc] initWithPokemon:self.thePokemon];
+		[self presentViewController:ppv animated:YES completion:nil];
+	}
+}
+
+- (void)updateSpecies:(NSNotification *)notis
+{
+	NSDictionary *dict = notis.userInfo;
+	self.thePokemon = [[Pokemon alloc] init];
+	self.thePokemon.item = [[dict objectForKey:@"item"] intValue];
+	self.thePokemon.number = [[dict objectForKey:@"number"] intValue];
+	self.thePokemon.shiny = 0;
+	self.thePokemon.nickname = self.thePokemon.species;
+	self.thePokemon.species = [dict objectForKey:@"name"];
+	self.thePokemon.generation = mydelegate.activeGen;
+	self.thePokemon.forme = [[dict objectForKey:@"subnumber"] intValue];
+	self.thePokemon.happiness = [[dict objectForKey:@"happy"] intValue];
+	self.thePokemon.level = [[dict objectForKey:@"level"] intValue];
+	self.thePokemon.gender = [[dict objectForKey:@"gender"] intValue];
+	self.thePokemon.subgeneration = mydelegate.activeSubgen;
+	
+	NSString *nListFile = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@/type1_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+	NSRange ranger = [nListFile rangeOfString:[NSString stringWithFormat:@"%d:%d",self.thePokemon.number,self.thePokemon.forme]];
+	nListFile = [nListFile substringFromIndex:ranger.location];
+	ranger = [nListFile rangeOfString:@" "];
+	nListFile = [nListFile substringFromIndex:ranger.location+1];
+	ranger = [nListFile rangeOfString:@"\n"];
+	nListFile = [nListFile substringToIndex:ranger.location];
+	self.thePokemon.type1 = [nListFile intValue];
+	
+	nListFile = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@/type2_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+	ranger = [nListFile rangeOfString:[NSString stringWithFormat:@"%d:%d",self.thePokemon.number,self.thePokemon.forme]];
+	nListFile = [nListFile substringFromIndex:ranger.location];
+	ranger = [nListFile rangeOfString:@" "];
+	nListFile = [nListFile substringFromIndex:ranger.location+1];
+	ranger = [nListFile rangeOfString:@"\n"];
+	nListFile = [nListFile substringToIndex:ranger.location];
+	self.thePokemon.type2 = [nListFile intValue];
+	
+	[self setupInterface];
+}
+
+- (IBAction)cancel:(id)sender
+{
+	[self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (IBAction)save:(id)sender
+{
+	Pokemon *passPoke = self.thePokemon;
+	NSNumber *passInd = self.theIndex;
+	[self dismissViewControllerAnimated:YES completion:^{
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"updatePoke" object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:passPoke,@"poketopass",passInd,@"indtopass",nil]];}];
+}
+
+- (void)setupInterface
+{
 	[self.pokeImage setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/%d.png",mydelegate.basePath,self.thePokemon.number]]];
 	if (self.thePokemon.shiny) {
 		[self.pokeImage setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/images/black-white/shiny/%d.png",mydelegate.basePath,self.thePokemon.number]]];
@@ -163,139 +339,6 @@
 		[self.abilityButton setTitle:self.ability3 forState:UIControlStateNormal];
 		[self.abilityDesc setText:self.abdesc3];
 	}
-}
-
-- (IBAction)cycleIVs:(id)sender // for cycling between HP, ATK, etc.
-{
-	self.currentIV++;
-	if (self.currentIV>5) {
-		self.currentIV = 0;
-	}
-	
-	switch (self.currentIV) {
-		case 0:
-			[self.IVButton setTitle:[NSString stringWithFormat:@"HP: %d",self.thePokemon.dv1] forState:UIControlStateNormal];
-			[self.IVStepper setValue:self.thePokemon.dv1];
-			break;
-		case 1:
-			[self.IVButton setTitle:[NSString stringWithFormat:@"ATK: %d",self.thePokemon.dv2] forState:UIControlStateNormal];
-			[self.IVStepper setValue:self.thePokemon.dv2];
-			break;
-		case 2:
-			[self.IVButton setTitle:[NSString stringWithFormat:@"DEF: %d",self.thePokemon.dv3] forState:UIControlStateNormal];
-			[self.IVStepper setValue:self.thePokemon.dv3];
-			break;
-		case 3:
-			[self.IVButton setTitle:[NSString stringWithFormat:@"SPA: %d",self.thePokemon.dv4] forState:UIControlStateNormal];
-			[self.IVStepper setValue:self.thePokemon.dv4];
-			break;
-		case 4:
-			[self.IVButton setTitle:[NSString stringWithFormat:@"SPD: %d",self.thePokemon.dv5] forState:UIControlStateNormal];
-			[self.IVStepper setValue:self.thePokemon.dv5];
-			break;
-		case 5:
-			[self.IVButton setTitle:[NSString stringWithFormat:@"SPE: %d",self.thePokemon.dv6] forState:UIControlStateNormal];
-			[self.IVStepper setValue:self.thePokemon.dv6];
-			break;
-		default:
-			break;
-	}
-}
-
-- (IBAction)changeIV:(id)sender // for changing the value of the currently displayed IV
-{
-	switch (self.currentIV) {
-		case 0:
-			self.thePokemon.dv1 = (int)self.IVStepper.value;
-			[self.IVButton setTitle:[NSString stringWithFormat:@"HP: %d",self.thePokemon.dv1] forState:UIControlStateNormal];
-			break;
-		case 1:
-			self.thePokemon.dv2 = (int)self.IVStepper.value;
-			[self.IVButton setTitle:[NSString stringWithFormat:@"ATK: %d",self.thePokemon.dv2] forState:UIControlStateNormal];
-			break;
-		case 2:
-			self.thePokemon.dv3 = (int)self.IVStepper.value;
-			[self.IVButton setTitle:[NSString stringWithFormat:@"DEF: %d",self.thePokemon.dv3] forState:UIControlStateNormal];
-			break;
-		case 3:
-			self.thePokemon.dv4 = (int)self.IVStepper.value;
-			[self.IVButton setTitle:[NSString stringWithFormat:@"SPA: %d",self.thePokemon.dv4] forState:UIControlStateNormal];
-			break;
-		case 4:
-			self.thePokemon.dv5 = (int)self.IVStepper.value;
-			[self.IVButton setTitle:[NSString stringWithFormat:@"SPD: %d",self.thePokemon.dv5] forState:UIControlStateNormal];
-			break;
-		case 5:
-			self.thePokemon.dv6 = (int)self.IVStepper.value;
-			[self.IVButton setTitle:[NSString stringWithFormat:@"SPE: %d",self.thePokemon.dv6] forState:UIControlStateNormal];
-			break;
-		default:
-			break;
-	}
-}
-
-- (IBAction)cycleAbilities:(id)sender
-{
-	if ([self.abilityButton.titleLabel.text isEqualToString:self.ability1]) {
-		if (![self.ability2 isEqualToString:@"NONE"]) {
-			[self.abilityButton setTitle:self.ability2 forState:UIControlStateNormal];
-			[self.abilityDesc setText:self.abdesc2];
-			self.thePokemon.ability = self.ab2;
-		} else if (![self.ability3 isEqualToString:@"NONE"]) {
-			[self.abilityButton setTitle:self.ability3 forState:UIControlStateNormal];
-			[self.abilityDesc setText:self.abdesc3];
-			self.thePokemon.ability = self.ab3;
-		}
-	} else if ([self.abilityButton.titleLabel.text isEqualToString:self.ability2]) {
-		if (![self.ability3 isEqualToString:@"NONE"]) {
-			[self.abilityButton setTitle:self.ability3 forState:UIControlStateNormal];
-			[self.abilityDesc setText:self.abdesc3];
-			self.thePokemon.ability = self.ab3;
-		} else if (![self.ability1 isEqualToString:@"NONE"]) {
-			[self.abilityButton setTitle:self.ability1 forState:UIControlStateNormal];
-			[self.abilityDesc setText:self.abdesc1];
-			self.thePokemon.ability = self.ab1;
-		}
-	} else if ([self.abilityButton.titleLabel.text isEqualToString:self.ability3]) {
-		if (![self.ability1 isEqualToString:@"NONE"]) {
-			[self.abilityButton setTitle:self.ability1 forState:UIControlStateNormal];
-			[self.abilityDesc setText:self.abdesc1];
-			self.thePokemon.ability = self.ab1;
-		} else if (![self.ability2 isEqualToString:@"NONE"]) {
-			[self.abilityButton setTitle:self.ability2 forState:UIControlStateNormal];
-			[self.abilityDesc setText:self.abdesc2];
-			self.thePokemon.ability = self.ab2;
-		}
-	}
-}
-
-- (IBAction)goBack:(id)sender
-{
-	Pokemon *passPoke = self.thePokemon;
-	NSNumber *passInd = self.theIndex;
-	[self dismissViewControllerAnimated:YES completion:^{
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"swapToPoke" object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:passPoke,@"poketopass",passInd,@"indtopass",nil]];}];
-}
-
-- (IBAction)editSpecies:(UITapGestureRecognizer *)sender
-{
-	if (sender.state==UIGestureRecognizerStateEnded) {
-		PokePickView *ppv = [[PokePickView alloc] initWithPokemon:self.thePokemon];
-		[self presentViewController:ppv animated:YES completion:nil];
-	}
-}
-
-- (IBAction)cancel:(id)sender
-{
-	[self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-- (IBAction)save:(id)sender
-{
-	Pokemon *passPoke = self.thePokemon;
-	NSNumber *passInd = self.theIndex;
-	[self dismissViewControllerAnimated:YES completion:^{
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"updatePoke" object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:passPoke,@"poketopass",passInd,@"indtopass",nil]];}];
 }
 
 - (void)didReceiveMemoryWarning

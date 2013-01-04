@@ -13,7 +13,7 @@
 - (id)init
 {
 	self.item = 0;
-	self.ability = 0;
+	self.ability = 1;
 	self.number = 0;
 	self.nature = 0;
 	self.shiny = 0;
@@ -22,8 +22,8 @@
 	self.generation = 0;
 	self.forme = 0;
 	self.happiness = 0;
-	self.level = 0;
-	self.gender = 0;
+	self.level = 100;
+	self.gender = 1;
 	self.subgeneration = 0;
 	self.type1 = 0;
 	self.type1 = 0;
@@ -31,12 +31,12 @@
 	self.move2 = 0;
 	self.move3 = 0;
 	self.move4 = 0;
-	self.dv1 = 0;
-	self.dv2 = 0;
-	self.dv3 = 0;
-	self.dv4 = 0;
-	self.dv5 = 0;
-	self.dv6 = 0;
+	self.dv1 = 31;
+	self.dv2 = 31;
+	self.dv3 = 31;
+	self.dv4 = 31;
+	self.dv5 = 31;
+	self.dv6 = 31;
 	self.ev1 = 0;
 	self.ev2 = 0;
 	self.ev3 = 0;

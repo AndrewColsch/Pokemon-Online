@@ -27,16 +27,13 @@
 	NSString *zipPath = [[NSBundle mainBundle] pathForResource:@"sprites_5g" ofType:@"zip"];
 	NSRange lastslash = [zipPath rangeOfString:@"/" options:NSBackwardsSearch];
 	self.basePath = [zipPath substringToIndex:lastslash.location+1];
-	/*
-	[SSZipArchive unzipFileAtPath:zipPath toDestination:self.basePath];
-
-	zipPath = [[NSBundle mainBundle] pathForResource:@"Berries" ofType:@"zip"];
-	[SSZipArchive unzipFileAtPath:zipPath toDestination:[NSString stringWithFormat:@"%@/Berries/",self.basePath]];
-	zipPath = [[NSBundle mainBundle] pathForResource:@"Items" ofType:@"zip"];
-	[SSZipArchive unzipFileAtPath:zipPath toDestination:[NSString stringWithFormat:@"%@/Items/",self.basePath]];
-	 */
 	
-	// attempting to alphabetize the item arrays
+	if (![[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/Teams.tp",self.basePath]]) {
+		NSString *temp = @"{start}\n";
+		[temp writeToFile:[NSString stringWithFormat:@"%@/Teams.tp",self.basePath] atomically:YES encoding:NSUTF8StringEncoding error:nil];
+	}
+	
+	// alphabetizing the item arrays
 	self.itemAlphaNum = [[NSMutableArray alloc] init];
 	self.berryAlphaNum = [[NSMutableArray alloc] init];
 	

@@ -35,6 +35,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSpecies:) name:@"updateSpecies" object:nil];
 	[self setupInterface];
 }
 
@@ -235,6 +236,43 @@
 	NSNumber *passInd = self.theIndex;
 	[self dismissViewControllerAnimated:YES completion:^{
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"updatePoke" object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:passPoke,@"poketopass",passInd,@"indtopass",nil]];}];
+}
+
+- (void)updateSpecies:(NSNotification *)notis
+{
+	NSDictionary *dict = notis.userInfo;
+	self.thePokemon = [[Pokemon alloc] init];
+	self.thePokemon.item = [[dict objectForKey:@"item"] intValue];
+	self.thePokemon.number = [[dict objectForKey:@"number"] intValue];
+	self.thePokemon.shiny = 0;
+	self.thePokemon.nickname = [dict objectForKey:@"name"];
+	self.thePokemon.species = [dict objectForKey:@"name"];
+	self.thePokemon.generation = mydelegate.activeGen;
+	self.thePokemon.forme = [[dict objectForKey:@"subnumber"] intValue];
+	self.thePokemon.happiness = [[dict objectForKey:@"happy"] intValue];
+	self.thePokemon.level = [[dict objectForKey:@"level"] intValue];
+	self.thePokemon.gender = [[dict objectForKey:@"gender"] intValue];
+	self.thePokemon.subgeneration = mydelegate.activeSubgen;
+	
+	NSString *nListFile = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@/type1_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+	NSRange ranger = [nListFile rangeOfString:[NSString stringWithFormat:@"%d:%d",self.thePokemon.number,self.thePokemon.forme]];
+	nListFile = [nListFile substringFromIndex:ranger.location];
+	ranger = [nListFile rangeOfString:@" "];
+	nListFile = [nListFile substringFromIndex:ranger.location+1];
+	ranger = [nListFile rangeOfString:@"\n"];
+	nListFile = [nListFile substringToIndex:ranger.location];
+	self.thePokemon.type1 = [nListFile intValue];
+	
+	nListFile = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@/type2_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+	ranger = [nListFile rangeOfString:[NSString stringWithFormat:@"%d:%d",self.thePokemon.number,self.thePokemon.forme]];
+	nListFile = [nListFile substringFromIndex:ranger.location];
+	ranger = [nListFile rangeOfString:@" "];
+	nListFile = [nListFile substringFromIndex:ranger.location+1];
+	ranger = [nListFile rangeOfString:@"\n"];
+	nListFile = [nListFile substringToIndex:ranger.location];
+	self.thePokemon.type2 = [nListFile intValue];
+	
+	[self setupInterface];
 }
 
 - (void)setupInterface
