@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Pokemon.h"
 #import "PokePickView.h"
+#import "Move.h"
 
 @interface EditMoreVC : UIViewController <UITableViewDataSource,UITableViewDelegate>
 
@@ -33,7 +34,16 @@
 @property (nonatomic, retain) NSString *abdesc3;
 
 @property (nonatomic, retain) IBOutlet UITableView *moveTable;
-@property (nonatomic, retain) IBOutlet UITableViewCell *headerCell;
+@property (nonatomic, retain) UITableViewCell *headerCell;
+@property (nonatomic, retain) IBOutlet UIButton *moveButton1;
+@property (nonatomic, retain) IBOutlet UIButton *moveButton2;
+@property (nonatomic, retain) IBOutlet UIButton *moveButton3;
+@property (nonatomic, retain) IBOutlet UIButton *moveButton4;
+@property (nonatomic, retain) NSMutableArray *moveList;
+@property (nonatomic, retain) Move *move1;
+@property (nonatomic, retain) Move *move2;
+@property (nonatomic, retain) Move *move3;
+@property (nonatomic, retain) Move *move4;
 
 - (id)initWithPokemon:(Pokemon *)poke fromIndex:(int)ind;
 - (IBAction)cycleIVs:(id)sender;
@@ -41,8 +51,17 @@
 - (IBAction)cycleAbilities:(id)sender;
 - (IBAction)goBack:(id)sender;
 - (IBAction)editSpecies:(UITapGestureRecognizer *)sender;
+- (IBAction)editMove:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)save:(id)sender;
 - (void)setupInterface;
+
+// segmented control actions
+- (void)changeSort:(UISegmentedControl *)sender;
+- (void)sortByType;
+- (void)sortByName;
+- (void)sortByPP;
+- (void)sortByPower;
+- (void)sortByAccuracy;
 
 @end

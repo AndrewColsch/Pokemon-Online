@@ -330,6 +330,9 @@
 		7B6141E416549D75009E4F3E /* stats.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7B61412B16549D75009E4F3E /* stats.txt */; };
 		7B6141E516549D75009E4F3E /* weight.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7B61412C16549D75009E4F3E /* weight.txt */; };
 		7B6141E816549F5A009E4F3E /* Pokemon.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6141E716549F5A009E4F3E /* Pokemon.m */; };
+		7B691250169F7B5D00D96BD4 /* cat_special.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7B69124D169F7B5A00D96BD4 /* cat_special.gif */; };
+		7B691251169F7B5D00D96BD4 /* cat_status.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7B69124E169F7B5B00D96BD4 /* cat_status.gif */; };
+		7B691252169F7B5D00D96BD4 /* cat_physical.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7B69124F169F7B5C00D96BD4 /* cat_physical.gif */; };
 		7B7719BD1663CE960099EA44 /* Move.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7719BC1663CE960099EA44 /* Move.m */; };
 		7BCF1D1916544F6200486B9A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCF1D1816544F6200486B9A /* UIKit.framework */; };
 		7BCF1D1B16544F6200486B9A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BCF1D1A16544F6200486B9A /* Foundation.framework */; };
@@ -782,6 +785,9 @@
 		7B61412C16549D75009E4F3E /* weight.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weight.txt; sourceTree = "<group>"; };
 		7B6141E616549F5A009E4F3E /* Pokemon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pokemon.h; sourceTree = "<group>"; };
 		7B6141E716549F5A009E4F3E /* Pokemon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pokemon.m; sourceTree = "<group>"; };
+		7B69124D169F7B5A00D96BD4 /* cat_special.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cat_special.gif; sourceTree = "<group>"; };
+		7B69124E169F7B5B00D96BD4 /* cat_status.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cat_status.gif; sourceTree = "<group>"; };
+		7B69124F169F7B5C00D96BD4 /* cat_physical.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cat_physical.gif; sourceTree = "<group>"; };
 		7B7719BB1663CE960099EA44 /* Move.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Move.h; sourceTree = "<group>"; };
 		7B7719BC1663CE960099EA44 /* Move.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Move.m; sourceTree = "<group>"; };
 		7BCF1D1416544F6200486B9A /* Pokemon Online.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pokemon Online.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1707,6 +1713,9 @@
 			isa = PBXGroup;
 			children = (
 				7BCF1EEA1654524400486B9A /* category.txt */,
+				7B69124D169F7B5A00D96BD4 /* cat_special.gif */,
+				7B69124E169F7B5B00D96BD4 /* cat_status.gif */,
+				7B69124F169F7B5C00D96BD4 /* cat_physical.gif */,
 				7BCF1EEB1654524400486B9A /* type10_hp.txt */,
 				7BCF1EEC1654524400486B9A /* type11_hp.txt */,
 				7BCF1EED1654524400486B9A /* type12_hp.txt */,
@@ -2236,6 +2245,9 @@
 				7BCF66601666B13D005B1182 /* images in Resources */,
 				7B17358C166D8E8F00173047 /* Teams in Resources */,
 				7B10307616727631007D0E1B /* PokePickView.xib in Resources */,
+				7B691250169F7B5D00D96BD4 /* cat_special.gif in Resources */,
+				7B691251169F7B5D00D96BD4 /* cat_status.gif in Resources */,
+				7B691252169F7B5D00D96BD4 /* cat_physical.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

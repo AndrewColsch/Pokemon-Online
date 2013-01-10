@@ -36,6 +36,83 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSpecies:) name:@"updateSpecies" object:nil];
+	
+	// set up the header cell for the move table
+	self.headerCell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, 462, 40)];
+	UISegmentedControl *topBar = [[UISegmentedControl alloc] initWithFrame:CGRectMake(0, 0, 462, 40)];
+	[topBar addTarget:self action:@selector(changeSort:) forControlEvents:UIControlEventValueChanged];
+	[topBar setSegmentedControlStyle:UISegmentedControlStyleBar];
+	[topBar insertSegmentWithTitle:@"Type" atIndex:0 animated:NO];
+	[topBar setWidth:48.0 forSegmentAtIndex:0];
+	[topBar insertSegmentWithTitle:@"Name" atIndex:1 animated:NO];
+	[topBar setWidth:120.0 forSegmentAtIndex:1];
+	[topBar insertSegmentWithTitle:@"Learn" atIndex:2 animated:NO];
+	[topBar setWidth:65.0 forSegmentAtIndex:2];
+	[topBar insertSegmentWithTitle:@"PP" atIndex:3 animated:NO];
+	[topBar setWidth:42.0 forSegmentAtIndex:3];
+	[topBar insertSegmentWithTitle:@"Power" atIndex:4 animated:NO];
+	[topBar setWidth:50.0 forSegmentAtIndex:4];
+	[topBar insertSegmentWithTitle:@"Accuracy" atIndex:5 animated:NO];
+	[topBar setWidth:60.0 forSegmentAtIndex:5];
+	[topBar insertSegmentWithTitle:@"Category" atIndex:6 animated:NO];
+	[topBar setWidth:70.0 forSegmentAtIndex:6];
+	[self.headerCell addSubview:topBar];
+	[topBar setSelectedSegmentIndex:1];
+	
+	// setting up the movelist
+	self.moveList = [[NSMutableArray alloc] init];
+	NSMutableArray *movenums = [[NSMutableArray alloc] init];
+	
+	// LEVEL UP MOVES
+	NSString *text = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@/level_moves_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+	NSRange ranger = [text rangeOfString:[NSString stringWithFormat:@"%d:%d",self.thePokemon.number,self.thePokemon.forme]];
+	text = [text substringFromIndex:ranger.location];
+	ranger = [text rangeOfString:@" "];
+	text = [text substringFromIndex:ranger.location+1];
+	ranger = [text rangeOfString:@"\n"];
+	text = [text substringToIndex:ranger.location];
+	
+	ranger = [text rangeOfString:@" "];
+	while (ranger.location!=NSNotFound) {
+		NSNumber *newnum = [[NSNumber alloc] initWithInt:[[text substringToIndex:ranger.location] intValue]];
+		[movenums addObject:newnum];
+		text = [text substringFromIndex:ranger.location+1];
+		ranger = [text rangeOfString:@" "];
+	}
+	NSNumber *newnum = [[NSNumber alloc] initWithInt:[[text substringToIndex:text.length] intValue]];
+	[movenums addObject:newnum];
+	
+	for (int x=0; x<movenums.count; x++) {
+		Move *newmove = [Move MoveFromNumber:[[movenums objectAtIndex:x] intValue]];
+		newmove.learned = @"Level Up";
+		[self.moveList addObject:newmove];
+	}
+	
+	// TM/HM MOVES
+	text = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@/tm_and_hm_moves_5g.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
+	ranger = [text rangeOfString:[NSString stringWithFormat:@"%d:%d",self.thePokemon.number,self.thePokemon.forme]];
+	text = [text substringFromIndex:ranger.location];
+	ranger = [text rangeOfString:@" "];
+	text = [text substringFromIndex:ranger.location+1];
+	ranger = [text rangeOfString:@"\n"];
+	text = [text substringToIndex:ranger.location];
+	
+	ranger = [text rangeOfString:@" "];
+	while (ranger.location!=NSNotFound) {
+		NSNumber *newnum = [[NSNumber alloc] initWithInt:[[text substringToIndex:ranger.location] intValue]];
+		[movenums addObject:newnum];
+		text = [text substringFromIndex:ranger.location+1];
+		ranger = [text rangeOfString:@" "];
+	}
+	newnum = [[NSNumber alloc] initWithInt:[[text substringToIndex:text.length] intValue]];
+	[movenums addObject:newnum];
+	
+	for (int x=0; x<movenums.count; x++) {
+		Move *newmove = [Move MoveFromNumber:[[movenums objectAtIndex:x] intValue]];
+		newmove.learned = @"TM/HM";
+		[self.moveList addObject:newmove];
+	}
+	
 	[self setupInterface];
 }
 
@@ -194,6 +271,16 @@
 	self.thePokemon.type2 = [nListFile intValue];
 	
 	[self setupInterface];
+	[self.moveTable reloadData];
+}
+
+- (IBAction)editMove:(id)sender
+{
+	if (self.moveTable.hidden) {
+		[self.moveTable setHidden:NO];
+	} else {
+		[self.moveTable setHidden:YES];
+	}
 }
 
 - (IBAction)cancel:(id)sender
@@ -329,6 +416,11 @@
 		self.abdesc3 = tempabil;
 	}
 	
+	if (self.thePokemon.ability==(-1)) {
+		// Is a default Pokemon, need to set ability to first on the list.
+		self.thePokemon.ability=self.ab1;
+	}
+	
 	if (self.thePokemon.ability==self.ab1) {
 		[self.abilityButton setTitle:self.ability1 forState:UIControlStateNormal];
 		[self.abilityDesc setText:self.abdesc1];
@@ -353,12 +445,157 @@
 	if (indexPath.row==0) {
 		return self.headerCell;
 	}
-	else return [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+	
+	UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+	Move *m = [self.moveList objectAtIndex:indexPath.row-1]; // have to go back one, 0 is title row
+	
+	UIImageView *typeImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 12, 48, 18)];
+	[typeImage setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/type%d.png",mydelegate.basePath,m.type]]];
+	[cell addSubview:typeImage];
+	
+	UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 0, 120, 40)];
+	nameLabel.text = m.name;
+	[nameLabel setAdjustsFontSizeToFitWidth:YES];
+	[cell addSubview:nameLabel];
+	
+	UILabel *learnLabel = [[UILabel alloc] initWithFrame:CGRectMake(170, 0, 65, 40)];
+	learnLabel.text = m.learned;
+	[learnLabel setAdjustsFontSizeToFitWidth:YES];
+	[cell addSubview:learnLabel];
+	
+	UILabel *ppLabel = [[UILabel alloc] initWithFrame:CGRectMake(242, 0, 42, 40)];
+	ppLabel.text = [NSString stringWithFormat:@"%d",m.pp];
+	[ppLabel setAdjustsFontSizeToFitWidth:YES];
+	[cell addSubview:ppLabel];
+	
+	UILabel *powLabel = [[UILabel alloc] initWithFrame:CGRectMake(284, 0, 50, 40)];
+	if (m.power%10!=0||m.power==0) {
+		powLabel.text = @"--";
+	}
+	else {
+		powLabel.text = [NSString stringWithFormat:@"%d",m.power];
+	}
+	[powLabel setAdjustsFontSizeToFitWidth:YES];
+	[cell addSubview:powLabel];
+	
+	UILabel *accLabel = [[UILabel alloc] initWithFrame:CGRectMake(334, 0, 60, 40)];
+	if (m.accuracy==101) {
+		accLabel.text = @"--";
+	}
+	else {
+		accLabel.text = [NSString stringWithFormat:@"%d",m.accuracy];
+	}
+	[accLabel setAdjustsFontSizeToFitWidth:YES];
+	[cell addSubview:accLabel];
+	
+	UIImageView *catImage = [[UIImageView alloc] initWithFrame:CGRectMake(400, 12, 48, 18)];
+	if (m.category==0) {
+		[catImage setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/cat_physical.gif",mydelegate.basePath]]];
+	}
+	else if (m.category==1) {
+		[catImage setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/cat_special.gif",mydelegate.basePath]]];
+	}
+	else {
+		[catImage setImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/cat_status.gif",mydelegate.basePath]]];
+	}
+	[cell addSubview:catImage];
+	
+	return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return 2;
+	return self.moveList.count+1;
+}
+
+#pragma mark Table Header Actions
+- (void)changeSort:(UISegmentedControl *)sender
+{
+	if (sender.selectedSegmentIndex==0) {
+		UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"Sorting" message:@"by Type." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+		[al show];
+	}
+	else if (sender.selectedSegmentIndex==1) {
+		[self sortByName];
+	}
+	else if (sender.selectedSegmentIndex==3) {
+		[self sortByPP];
+	}
+	else if (sender.selectedSegmentIndex==4) {
+		[self sortByPower];
+	}
+	else if (sender.selectedSegmentIndex==5) {
+		[self sortByAccuracy];
+	}
+}
+
+- (void)sortByType
+{
+	
+}
+
+- (void)sortByName
+{
+	for (int x=0; x<self.moveList.count; x++) {
+		for (int y=x+1; y<self.moveList.count; y++) {
+			Move *m1 = [self.moveList objectAtIndex:x];
+			Move *m2 = [self.moveList objectAtIndex:y];
+			if ([m1.name caseInsensitiveCompare:m2.name]==NSOrderedDescending) {
+				[self.moveList replaceObjectAtIndex:x withObject:m2];
+				[self.moveList replaceObjectAtIndex:y withObject:m1];
+			}
+		}
+	}
+	
+	[self.moveTable reloadData];
+}
+
+- (void)sortByPP
+{
+	for (int x=0; x<self.moveList.count; x++) {
+		for (int y=x+1; y<self.moveList.count; y++) {
+			Move *m1 = [self.moveList objectAtIndex:x];
+			Move *m2 = [self.moveList objectAtIndex:y];
+			if (m1.pp<m2.pp) {
+				[self.moveList replaceObjectAtIndex:x withObject:m2];
+				[self.moveList replaceObjectAtIndex:y withObject:m1];
+			}
+		}
+	}
+	
+	[self.moveTable reloadData];
+}
+
+- (void)sortByPower
+{
+	for (int x=0; x<self.moveList.count; x++) {
+		for (int y=x+1; y<self.moveList.count; y++) {
+			Move *m1 = [self.moveList objectAtIndex:x];
+			Move *m2 = [self.moveList objectAtIndex:y];
+			if (m1.power<m2.power) {
+				[self.moveList replaceObjectAtIndex:x withObject:m2];
+				[self.moveList replaceObjectAtIndex:y withObject:m1];
+			}
+		}
+	}
+	
+	[self.moveTable reloadData];
+}
+
+- (void)sortByAccuracy
+{
+	for (int x=0; x<self.moveList.count; x++) {
+		for (int y=x+1; y<self.moveList.count; y++) {
+			Move *m1 = [self.moveList objectAtIndex:x];
+			Move *m2 = [self.moveList objectAtIndex:y];
+			if (m1.accuracy<m2.accuracy) {
+				[self.moveList replaceObjectAtIndex:x withObject:m2];
+				[self.moveList replaceObjectAtIndex:y withObject:m1];
+			}
+		}
+	}
+	
+	[self.moveTable reloadData];
 }
 
 @end

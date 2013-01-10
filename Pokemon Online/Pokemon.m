@@ -13,7 +13,7 @@
 - (id)init
 {
 	self.item = 0;
-	self.ability = 1;
+	self.ability = -1;
 	self.number = 0;
 	self.nature = 0;
 	self.shiny = 0;
