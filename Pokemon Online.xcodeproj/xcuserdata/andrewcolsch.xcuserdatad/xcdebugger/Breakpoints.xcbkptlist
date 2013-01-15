@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Pokemon Online/EditMoreVC.m"
-         timestampString = "379548810.980303"
+         timestampString = "379890397.271103"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "326"
-         endingLineNumber = "326"
+         startingLineNumber = "298"
+         endingLineNumber = "298"
          landmarkName = "-setupInterface"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,51 +47,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Pokemon Online/EditMoreVC.m"
-         timestampString = "379548026.151639"
+         timestampString = "379890397.271103"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "84"
-         endingLineNumber = "84"
-         landmarkName = "-viewDidLoad"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Pokemon Online/EditMoreVC.m"
-         timestampString = "379548810.980303"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "449"
-         endingLineNumber = "449"
+         startingLineNumber = "700"
+         endingLineNumber = "700"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Pokemon Online/Move.m"
-         timestampString = "379545621.627559"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "17"
-         endingLineNumber = "17"
-         landmarkName = "+MoveFromNumber:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Pokemon Online/Move.m"
-         timestampString = "379549384.732317"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "387"
-         endingLineNumber = "387"
-         landmarkName = "+MoveFromNumber:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

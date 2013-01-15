@@ -14,6 +14,8 @@
 {
 	Move *theMove = [[Move alloc] init];
 	
+	theMove.number = num;
+	
 	NSString *text = [[NSString alloc] initWithContentsOfFile:[NSString stringWithFormat:@"%@/moves.txt",mydelegate.basePath] encoding:NSUTF8StringEncoding error:nil];
 	NSRange ranger = [text rangeOfString:[NSString stringWithFormat:@"%d ",num]];
 	if (ranger.location==NSNotFound) {
@@ -394,6 +396,42 @@
 	
 	
 	return theMove;
+}
+
+-(id)initWithMove:(Move *)otherM
+{
+	Move *m = [[Move alloc] init];
+	m.name = otherM.name;
+	m.description = otherM.description;
+	m.effect = otherM.effect;
+	m.number = otherM.number;
+	m.accuracy = otherM.accuracy;
+	m.category = otherM.category;
+	m.causedEffect = otherM.causedEffect;
+	m.critRate = otherM.critRate;
+	m.damageClass = otherM.damageClass;
+	m.effectNumber = otherM.effectNumber;
+	m.effectChance = otherM.effectChance;
+	m.flags = otherM.flags;
+	m.flinchChance = otherM.flinchChance;
+	m.healing = otherM.healing;
+	m.minTurns = otherM.minTurns;
+	m.maxTurns = otherM.maxTurns;
+	m.minmaxhits = otherM.minmaxhits;
+	m.power = otherM.power;
+	m.pp = otherM.pp;
+	m.priority = otherM.priority;
+	m.range = otherM.range;
+	m.recoil = otherM.recoil;
+	m.specialEffect = otherM.specialEffect;
+	m.statAffected = otherM.statAffected;
+	m.statBoost = otherM.statBoost;
+	m.statRate = otherM.statRate;
+	m.status = otherM.status;
+	m.type = otherM.type;
+	m.learned = otherM.learned;
+	
+	return m;
 }
 
 @end

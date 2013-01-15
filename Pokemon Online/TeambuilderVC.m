@@ -947,24 +947,24 @@
 	// Pokemon
 	for (int x=0; x<6; x++) {
 		poke = [mydelegate.activeTeam objectAtIndex:x];
-		ostr = [NSString stringWithFormat:@"%@<Pokemon Item=\"%d\" Ability=\"%d\" Num=\"%d\" Nature=\"%d\" Shiny=\"%d\" Nickname=\"%@\" Gen=\"%d\" Forme=\"%d\" Happiness=\"%d\" Lvl=\"%d\" Gender=\"%d\" SubGen=\"%d\">\n",ostr,poke.item,poke.ability,poke.number,poke.nature,poke.shiny,poke.nickname,poke.generation,poke.forme,poke.happiness,poke.level,poke.gender,poke.subgeneration];
-		ostr = [NSString stringWithFormat:@"%@<Move>%d</Move>\n",ostr,poke.move1];
-		ostr = [NSString stringWithFormat:@"%@<Move>%d</Move>\n",ostr,poke.move2];
-		ostr = [NSString stringWithFormat:@"%@<Move>%d</Move>\n",ostr,poke.move3];
-		ostr = [NSString stringWithFormat:@"%@<Move>%d</Move>\n",ostr,poke.move4];
-		ostr = [NSString stringWithFormat:@"%@<DV>%d</DV>\n",ostr,poke.dv1];
-		ostr = [NSString stringWithFormat:@"%@<DV>%d</DV>\n",ostr,poke.dv2];
-		ostr = [NSString stringWithFormat:@"%@<DV>%d</DV>\n",ostr,poke.dv3];
-		ostr = [NSString stringWithFormat:@"%@<DV>%d</DV>\n",ostr,poke.dv4];
-		ostr = [NSString stringWithFormat:@"%@<DV>%d</DV>\n",ostr,poke.dv5];
-		ostr = [NSString stringWithFormat:@"%@<DV>%d</DV>\n",ostr,poke.dv6];
-		ostr = [NSString stringWithFormat:@"%@<EV>%d</EV>\n",ostr,poke.ev1];
-		ostr = [NSString stringWithFormat:@"%@<EV>%d</EV>\n",ostr,poke.ev2];
-		ostr = [NSString stringWithFormat:@"%@<EV>%d</EV>\n",ostr,poke.ev3];
-		ostr = [NSString stringWithFormat:@"%@<EV>%d</EV>\n",ostr,poke.ev4];
-		ostr = [NSString stringWithFormat:@"%@<EV>%d</EV>\n",ostr,poke.ev5];
-		ostr = [NSString stringWithFormat:@"%@<EV>%d</EV>\n",ostr,poke.ev6];
-		ostr = [NSString stringWithFormat:@"%@</Pokemon>\n",ostr];
+		ostr = [NSString stringWithFormat:@"%@\t<Pokemon Item=\"%d\" Ability=\"%d\" Num=\"%d\" Nature=\"%d\" Shiny=\"%d\" Nickname=\"%@\" Gen=\"%d\" Forme=\"%d\" Happiness=\"%d\" Lvl=\"%d\" Gender=\"%d\" SubGen=\"%d\">\n",ostr,poke.item,poke.ability,poke.number,poke.nature,poke.shiny,poke.nickname,poke.generation,poke.forme,poke.happiness,poke.level,poke.gender,poke.subgeneration];
+		ostr = [NSString stringWithFormat:@"%@\t\t<Move>%d</Move>\n",ostr,poke.move1];
+		ostr = [NSString stringWithFormat:@"%@\t\t<Move>%d</Move>\n",ostr,poke.move2];
+		ostr = [NSString stringWithFormat:@"%@\t\t<Move>%d</Move>\n",ostr,poke.move3];
+		ostr = [NSString stringWithFormat:@"%@\t\t<Move>%d</Move>\n",ostr,poke.move4];
+		ostr = [NSString stringWithFormat:@"%@\t\t<DV>%d</DV>\n",ostr,poke.dv1];
+		ostr = [NSString stringWithFormat:@"%@\t\t<DV>%d</DV>\n",ostr,poke.dv2];
+		ostr = [NSString stringWithFormat:@"%@\t\t<DV>%d</DV>\n",ostr,poke.dv3];
+		ostr = [NSString stringWithFormat:@"%@\t\t<DV>%d</DV>\n",ostr,poke.dv4];
+		ostr = [NSString stringWithFormat:@"%@\t\t<DV>%d</DV>\n",ostr,poke.dv5];
+		ostr = [NSString stringWithFormat:@"%@\t\t<DV>%d</DV>\n",ostr,poke.dv6];
+		ostr = [NSString stringWithFormat:@"%@\t\t<EV>%d</EV>\n",ostr,poke.ev1];
+		ostr = [NSString stringWithFormat:@"%@\t\t<EV>%d</EV>\n",ostr,poke.ev2];
+		ostr = [NSString stringWithFormat:@"%@\t\t<EV>%d</EV>\n",ostr,poke.ev3];
+		ostr = [NSString stringWithFormat:@"%@\t\t<EV>%d</EV>\n",ostr,poke.ev4];
+		ostr = [NSString stringWithFormat:@"%@\t\t<EV>%d</EV>\n",ostr,poke.ev5];
+		ostr = [NSString stringWithFormat:@"%@\t\t<EV>%d</EV>\n",ostr,poke.ev6];
+		ostr = [NSString stringWithFormat:@"%@\t</Pokemon>\n",ostr];
 	}
 	ostr = [NSString stringWithFormat:@"%@</Team>\n",ostr];
 	
@@ -990,7 +990,7 @@
 
 - (NSString *)removeTeamWithName:(NSString *)name fromList:(NSString *)list
 {
-	if ([list rangeOfString:[NSString stringWithFormat:@"teamName=\%@\"",name]].location==NSNotFound) {
+	if ([list rangeOfString:[NSString stringWithFormat:@"teamName=\"%@\"",name]].location==NSNotFound) {
 		return list;
 	}
 	NSString *temp = [NSString stringWithString:list];

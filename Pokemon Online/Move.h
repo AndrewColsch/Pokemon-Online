@@ -41,5 +41,6 @@
 @property (readwrite) NSString *learned;
 
 +(id)MoveFromNumber:(int)num;
+-(id)initWithMove:(Move *)otherM;
 
 @end
